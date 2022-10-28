@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/swordman.png" type="Texture" id=1]
+[ext_resource path="res://scripts/swordman.gd" type="Script" id=2]
+[ext_resource path="res://scripts/swordmansprite.gd" type="Script" id=3]
+[ext_resource path="res://scenes/inputhandler.tscn" type="PackedScene" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 4, 4 )
+
+[node name="swordman" type="KinematicBody2D"]
+script = ExtResource( 2 )
+
+[node name="Swordman" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+offset = Vector2( 4, 4 )
+script = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 4, 4 )
+scale = Vector2( 0.75, 0.75 )
+shape = SubResource( 1 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="inputhandler" parent="." instance=ExtResource( 4 )]
+
+[connection signal="kill" from="." to="inputhandler" method="_on_swordman_kill"]
+[connection signal="click" from="Swordman" to="." method="_on_Swordman_click"]

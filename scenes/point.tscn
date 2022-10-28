@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/movedot.png" type="Texture" id=1]
+[ext_resource path="res://assets/attackdot.png" type="Texture" id=2]
+[ext_resource path="res://scripts/point.gd" type="Script" id=3]
+[ext_resource path="res://scripts/moveswordman.gd" type="Script" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 4, 4 )
+
+[node name="point" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="Sprite2" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+offset = Vector2( 4, 4 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+offset = Vector2( 4, 4 )
+script = ExtResource( 4 )
+
+[node name="checkenemy" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="checkenemy"]
+position = Vector2( 4, 4 )
+scale = Vector2( 0.75, 0.75 )
+shape = SubResource( 1 )
+
+[connection signal="body_entered" from="checkenemy" to="." method="_on_checkenemy_body_entered"]
+[connection signal="body_exited" from="checkenemy" to="." method="_on_checkenemy_body_exited"]
