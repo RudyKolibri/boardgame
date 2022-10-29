@@ -6,46 +6,62 @@ var down = Vector2(0, 8)
 signal kill
 export var point : PackedScene
 func handle(x, y):
+	var recht = x
+	var links = x
+	var omhoog = y
+	var beneden = y
 	var pos = self.position
-	for i in x :
+	$recht.cast_to = right * x
+	$links.cast_to = left * x
+	$up.cast_to = up * x
+	$down.cast_to = down * x
+	if $recht.is_colliding():   
+		var origin = $recht.global_transform.origin
+		var collision_point = $recht.get_collision_point()
+		var distance = origin.distance_to(collision_point)
+		recht = round(distance / 8)
+	if $links.is_colliding():   
+		var origin = $links.global_transform.origin
+		var collision_point = $links.get_collision_point()
+		var distance = origin.distance_to(collision_point)
+		links = round(distance / 8)
+	if $up.is_colliding():   
+		var origin = $up.global_transform.origin
+		var collision_point = $up.get_collision_point()
+		var distance = origin.distance_to(collision_point)
+		omhoog = round(distance / 8)
+	if $down.is_colliding():   
+		var origin = $down.global_transform.origin
+		var collision_point = $down.get_collision_point()
+		var distance = origin.distance_to(collision_point)
+		beneden = round(distance / 8)
+	for i in recht :
 			self.position = self.position + right
 			var pointer = point.instance() as Node2D
 			get_parent().add_child(pointer)
 			pointer.global_position = self.global_position
 			connect("kill", pointer, "kill")
-			var check = pointer.checkcol()
-			if check == true:
-				break
 	self.position = pos
-	for i in x :
+	for i in links :
 			self.position = self.position + left
 			var pointer = point.instance() as Node2D
 			get_parent().add_child(pointer)
 			pointer.global_position = self.global_position
 			connect("kill", pointer, "kill")
-			var check = pointer.checkcol()
-			if check == true:
-				break
 	self.position = pos
-	for i in y :
+	for i in omhoog :
 			self.position = self.position + up
 			var pointer = point.instance() as Node2D
 			get_parent().add_child(pointer)
 			pointer.global_position = self.global_position
 			connect("kill", pointer, "kill")
-			var check = pointer.checkcol()
-			if check == true:
-				break
 	self.position = pos
-	for i in y:
+	for i in beneden:
 			self.position = self.position + down
 			var pointer = point.instance() as Node2D
 			get_parent().add_child(pointer)
 			pointer.global_position = self.global_position
 			connect("kill", pointer, "kill")
-			var check = pointer.checkcol()
-			if check == true:
-				break
 	self.position = pos
 func _on_swordman_kill():
 	emit_signal("kill")

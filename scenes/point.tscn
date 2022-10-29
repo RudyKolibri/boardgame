@@ -27,11 +27,5 @@ position = Vector2( 4, 4 )
 scale = Vector2( 0.75, 0.75 )
 shape = SubResource( 1 )
 
-[node name="RayCast2D" type="RayCast2D" parent="."]
-position = Vector2( 4, 4 )
-enabled = true
-cast_to = Vector2( 3, 0 )
-collision_mask = 2
-
 [connection signal="body_entered" from="checkenemy" to="." method="_on_checkenemy_body_entered"]
 [connection signal="body_exited" from="checkenemy" to="." method="_on_checkenemy_body_exited"]
