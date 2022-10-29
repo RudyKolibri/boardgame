@@ -13,7 +13,7 @@ func handle(x, y):
 			get_parent().add_child(pointer)
 			pointer.global_position = self.global_position
 			connect("kill", pointer, "kill")
-			var check = $RayCast2D3.is_colliding()
+			var check = pointer.checkcol()
 			if check == true:
 				break
 	self.position = pos
@@ -23,7 +23,7 @@ func handle(x, y):
 			get_parent().add_child(pointer)
 			pointer.global_position = self.global_position
 			connect("kill", pointer, "kill")
-			var check = $RayCast2D4.is_colliding()
+			var check = pointer.checkcol()
 			if check == true:
 				break
 	self.position = pos
@@ -33,7 +33,7 @@ func handle(x, y):
 			get_parent().add_child(pointer)
 			pointer.global_position = self.global_position
 			connect("kill", pointer, "kill")
-			var check = $RayCast2D2.is_colliding()
+			var check = pointer.checkcol()
 			if check == true:
 				break
 	self.position = pos
@@ -43,7 +43,7 @@ func handle(x, y):
 			get_parent().add_child(pointer)
 			pointer.global_position = self.global_position
 			connect("kill", pointer, "kill")
-			var check = $RayCast2D.is_colliding()
+			var check = pointer.checkcol()
 			if check == true:
 				break
 	self.position = pos

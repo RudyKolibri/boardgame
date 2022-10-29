@@ -12,27 +12,3 @@ point = ExtResource( 2 )
 visible = false
 texture = ExtResource( 3 )
 offset = Vector2( 4, 4 )
-
-[node name="RayCast2D" type="RayCast2D" parent="."]
-position = Vector2( 4, 4 )
-enabled = true
-cast_to = Vector2( 0, 8 )
-collision_mask = 2
-
-[node name="RayCast2D2" type="RayCast2D" parent="."]
-position = Vector2( 4, 4 )
-enabled = true
-cast_to = Vector2( 0, -8 )
-collision_mask = 2
-
-[node name="RayCast2D3" type="RayCast2D" parent="."]
-position = Vector2( 4, 4 )
-enabled = true
-cast_to = Vector2( 8, 0 )
-collision_mask = 2
-
-[node name="RayCast2D4" type="RayCast2D" parent="."]
-position = Vector2( 4, 4 )
-enabled = true
-cast_to = Vector2( -8, 0 )
-collision_mask = 2

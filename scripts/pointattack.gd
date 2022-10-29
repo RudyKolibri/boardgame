@@ -1,10 +1,11 @@
 extends Sprite
-signal click
+signal attack
 func _ready():
-	var _connect =connect("click", $"../..", "moveclick")
+	connect("attack", $"../..", "attackclick")
 func _input(event):
-	if self.visible:
+	if self.visible == true:
 		if event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_LEFT:
 			if get_rect().has_point(to_local(event.position)):
-				emit_signal("click", self.global_position)
-				$"..".hitter()
+				emit_signal("attack", self.global_position)
+			else:
+				$"..".queue_free()

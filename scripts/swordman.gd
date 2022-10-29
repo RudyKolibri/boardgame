@@ -47,3 +47,5 @@ func moveclick(pos):
 			times = - times
 	push(-move, times)
 	emit_signal("kill")
+func attackclick(_pos):
+	print("kill")
