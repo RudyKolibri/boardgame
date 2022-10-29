@@ -22,8 +22,8 @@ func push(velocity: Vector2, times = 1) -> void:
 		yield(tween, "tween_completed")
 		sliding = false
 		
-func calculate_destination(input):
-	var tile_map_position = $"..".world_to_map(global_position) + input
+func calculate_destination(inputs):
+	var tile_map_position = $"..".world_to_map(global_position) + inputs
 	return $"..".map_to_world(tile_map_position)
 	
 func can_move(move_to: Vector2) -> bool:

@@ -6,6 +6,7 @@
 extents = Vector2( 4, 4 )
 
 [node name="wall" type="KinematicBody2D"]
+collision_layer = 3
 
 [node name="Toren" type="Sprite" parent="."]
 texture = ExtResource( 1 )

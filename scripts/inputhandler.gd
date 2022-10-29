@@ -7,39 +7,51 @@ signal kill
 export var point : PackedScene
 func handle(x, y):
 	var pos = self.position
-	for i in x:
-		self.position = self.position + right
-		var pointer = point.instance() as Node2D
-		get_parent().add_child(pointer)
-		pointer.global_position = self.global_position
-		connect("kill", pointer, "kill")
+	for i in x :
+			self.position = self.position + right
+			var pointer = point.instance() as Node2D
+			get_parent().add_child(pointer)
+			pointer.global_position = self.global_position
+			connect("kill", pointer, "kill")
+			var check = $RayCast2D3.is_colliding()
+			if check == true:
+				break
 	self.position = pos
-	for i in x:
-		self.position = self.position + left
-		var pointer = point.instance() as Node2D
-		get_parent().add_child(pointer)
-		pointer.global_position = self.global_position
-		connect("kill", pointer, "kill")
+	for i in x :
+			self.position = self.position + left
+			var pointer = point.instance() as Node2D
+			get_parent().add_child(pointer)
+			pointer.global_position = self.global_position
+			connect("kill", pointer, "kill")
+			var check = $RayCast2D4.is_colliding()
+			if check == true:
+				break
+	self.position = pos
+	for i in y :
+			self.position = self.position + up
+			var pointer = point.instance() as Node2D
+			get_parent().add_child(pointer)
+			pointer.global_position = self.global_position
+			connect("kill", pointer, "kill")
+			var check = $RayCast2D2.is_colliding()
+			if check == true:
+				break
 	self.position = pos
 	for i in y:
-		self.position = self.position + up
-		var pointer = point.instance() as Node2D
-		get_parent().add_child(pointer)
-		pointer.global_position = self.global_position
-		connect("kill", pointer, "kill")
+			self.position = self.position + down
+			var pointer = point.instance() as Node2D
+			get_parent().add_child(pointer)
+			pointer.global_position = self.global_position
+			connect("kill", pointer, "kill")
+			var check = $RayCast2D.is_colliding()
+			if check == true:
+				break
 	self.position = pos
-	for i in y:
-		self.position = self.position + down
-		var pointer = point.instance() as Node2D
-		get_parent().add_child(pointer)
-		pointer.global_position = self.global_position
-		connect("kill", pointer, "kill")
-	self.position = pos
-
-
 func _on_swordman_kill():
 	emit_signal("kill")
 
 
 func _on_archer_kill():
 	emit_signal("kill")
+
+

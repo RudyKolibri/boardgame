@@ -38,6 +38,35 @@ position = Vector2( 24, 16 )
 [node name="swordman" parent="TileMap" instance=ExtResource( 2 )]
 position = Vector2( 24, 40 )
 
+[node name="wall2" parent="TileMap" instance=ExtResource( 4 )]
+position = Vector2( 8, 16 )
+
+[node name="wall3" parent="TileMap" instance=ExtResource( 4 )]
+position = Vector2( 16, 16 )
+
+[node name="wall4" parent="TileMap" instance=ExtResource( 4 )]
+position = Vector2( 40, 32 )
+
+[node name="wall5" parent="TileMap" instance=ExtResource( 4 )]
+position = Vector2( 40, 40 )
+
+[node name="wall6" parent="TileMap" instance=ExtResource( 4 )]
+position = Vector2( 48, 48 )
+
+[node name="wall7" parent="TileMap" instance=ExtResource( 4 )]
+position = Vector2( 48, 56 )
+
+[node name="wall8" parent="TileMap" instance=ExtResource( 4 )]
+position = Vector2( 0, 24 )
+
+[node name="archer2" parent="TileMap" instance=ExtResource( 5 )]
+position = Vector2( 48, 8 )
+
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2( 32, 32 )
 current = true
+
+[node name="StaticBody2D" type="KinematicBody2D" parent="."]
+
+[node name="CollisionShape2D2" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PoolVector2Array( 0, 0, 64, 0, 64, 64, 0, 64, 0, -24, -24, -24, -24, 88, 88, 88, 88, -24, 0, -24, 0, -8 )
