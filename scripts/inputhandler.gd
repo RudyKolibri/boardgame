@@ -6,6 +6,7 @@ var down = Vector2(0, 8)
 signal kill
 export var point : PackedScene
 func _ready():
+	
 	var ver = $"..".get_ver()
 	var hor = $"..".get_hor()
 	$recht.cast_to = right * hor
@@ -47,28 +48,28 @@ func handle(x, y):
 			var pointer = point.instance() as Node2D
 			get_parent().add_child(pointer)
 			pointer.global_position = self.global_position
-			connect("kill", pointer, "kill")
+			var _connect = connect("kill", pointer, "kill")
 	self.position = pos
 	for i in links :
 			self.position = self.position + left
 			var pointer = point.instance() as Node2D
 			get_parent().add_child(pointer)
 			pointer.global_position = self.global_position
-			connect("kill", pointer, "kill")
+			var _connect = connect("kill", pointer, "kill")
 	self.position = pos
 	for i in omhoog :
 			self.position = self.position + up
 			var pointer = point.instance() as Node2D
 			get_parent().add_child(pointer)
 			pointer.global_position = self.global_position
-			connect("kill", pointer, "kill")
+			var _connect = connect("kill", pointer, "kill")
 	self.position = pos
 	for i in beneden:
 			self.position = self.position + down
 			var pointer = point.instance() as Node2D
 			get_parent().add_child(pointer)
 			pointer.global_position = self.global_position
-			connect("kill", pointer, "kill")
+			var _connect = connect("kill", pointer, "kill")
 	self.position = pos
 func _on_swordman_kill():
 	emit_signal("kill")

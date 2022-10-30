@@ -3,15 +3,11 @@ var input = Vector2()
 export var sliding_time : = 0.3
 var sliding : = false
 onready var tween : Tween = $Tween
+export var attack : PackedScene
 signal kill
 var hor = 2
 var ver = 2
 export var enemy : bool
-func _ready():
-	if enemy == true:
-		self.collision_layer = 3
-	else:
-		self.collision_layer = 1
 func initialize():
 	position = calculate_destination(Vector2())
 	
@@ -30,8 +26,8 @@ func push(velocity: Vector2, times = 1) -> void:
 		yield(tween, "tween_completed")
 		sliding = false
 		
-func calculate_destination(input):
-	var tile_map_position = $"..".world_to_map(global_position) + input
+func calculate_destination(inputs):
+	var tile_map_position = $"..".world_to_map(global_position) + inputs
 	return $"..".map_to_world(tile_map_position)
 	
 func can_move(move_to: Vector2) -> bool:
@@ -55,6 +51,23 @@ func moveclick(pos):
 			times = - times
 	push(-move, times)
 	emit_signal("kill")
+func attackclick(pos):
+	var get_side = self.global_position - pos
+	var side = Vector2()
+	if get_side.x < 0:
+		side = "right"
+	if get_side.x > 0:
+		side = "left"
+	if get_side.y < 0:
+		side = "down"
+	if get_side.y > 0:
+		side = "up"
+	print(side)
+	print("attack")
+	emit_signal("kill")
+	var attacker = attack.instance() as Node2D
+	get_parent().add_child(attacker)
+	attacker.position = self.position - get_side
 func get_ver():
 	return ver
 func get_hor():
