@@ -4,6 +4,15 @@ export var sliding_time : = 0.3
 var sliding : = false
 onready var tween : Tween = $Tween
 signal kill
+var ver = 3
+var hor = 3
+export var enemy : bool
+func _ready():
+	if enemy == true:
+		self.collision_layer = 3
+		$inputhandler.queue_free()
+	else:
+		self.collision_layer = 1
 func initialize():
 	position = calculate_destination(Vector2())
 	
@@ -48,4 +57,9 @@ func moveclick(pos):
 
 
 func _on_Archer_click():
-	$inputhandler.handle(3, 3)
+	if enemy == false:
+		$inputhandler.handle(hor, ver)
+func get_ver():
+	return ver
+func get_hor():
+	return hor

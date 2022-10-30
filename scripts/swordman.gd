@@ -4,6 +4,14 @@ export var sliding_time : = 0.3
 var sliding : = false
 onready var tween : Tween = $Tween
 signal kill
+var hor = 2
+var ver = 2
+export var enemy : bool
+func _ready():
+	if enemy == true:
+		self.collision_layer = 3
+	else:
+		self.collision_layer = 1
 func initialize():
 	position = calculate_destination(Vector2())
 	
@@ -33,7 +41,7 @@ func can_move(move_to: Vector2) -> bool:
 	return not test_move(future_transform, Vector2())
 
 func _on_Swordman_click():
-	$inputhandler.handle(2, 2)
+	$inputhandler.handle(hor, ver)
 func moveclick(pos):
 	var times = 0
 	var move = self.global_position - pos
@@ -47,5 +55,7 @@ func moveclick(pos):
 			times = - times
 	push(-move, times)
 	emit_signal("kill")
-func attackclick(_pos):
-	print("kill")
+func get_ver():
+	return ver
+func get_hor():
+	return hor

@@ -5,6 +5,13 @@ var up = Vector2(0, -8)
 var down = Vector2(0, 8)
 signal kill
 export var point : PackedScene
+func _ready():
+	var ver = $"..".get_ver()
+	var hor = $"..".get_hor()
+	$recht.cast_to = right * hor
+	$links.cast_to = left * hor
+	$up.cast_to = up * ver
+	$down.cast_to = down * ver
 func handle(x, y):
 	var recht = x
 	var links = x
