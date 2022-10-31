@@ -10,6 +10,7 @@
 extents = Vector2( 4, 4 )
 
 [node name="swordman" type="KinematicBody2D"]
+collision_layer = 3
 script = ExtResource( 2 )
 attack = ExtResource( 5 )
 

@@ -3,6 +3,7 @@ var input = Vector2()
 export var sliding_time : = 0.3
 var sliding : = false
 onready var tween : Tween = $Tween
+export var arrow : PackedScene
 signal kill
 var ver = 3
 var hor = 3
@@ -52,6 +53,26 @@ func get_ver():
 	return ver
 func get_hor():
 	return hor
-func attackclick(_pos):
+func attackclick(pos):
 	print("attack")
 	emit_signal("kill")
+	var get_side = self.global_position - pos
+	var side = Vector2()
+	var arrower = arrow.instance() as Node2D
+	add_child(arrower)
+	arrower.global_position = self.global_position
+	arrower.position.x += 4
+	arrower.position.y += 4
+	if get_side.x < 0:
+		side = Vector2(8,0)
+		arrower.rotation_degrees = 0
+	if get_side.x > 0:
+		side =  Vector2(-8,0)
+		arrower.rotation_degrees = 180
+	if get_side.y < 0:
+		side =  Vector2(0,8)
+		arrower.rotation_degrees = 90
+	if get_side.y > 0:
+		side =  Vector2(0,-8)
+		arrower.rotation_degrees = -90
+	arrower.start(side)

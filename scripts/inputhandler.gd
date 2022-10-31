@@ -6,7 +6,10 @@ var down = Vector2(0, 8)
 signal kill
 export var point : PackedScene
 func _ready():
-	
+	$recht.add_exception($"..")
+	$links.add_exception($"..")
+	$up.add_exception($"..")
+	$down.add_exception($"..")
 	var ver = $"..".get_ver()
 	var hor = $"..".get_hor()
 	$recht.cast_to = right * hor
