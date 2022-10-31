@@ -8,6 +8,11 @@ signal kill
 var hor = 2
 var ver = 2
 export var enemy : bool
+func _ready():
+	if enemy:
+		add_to_group("enemy")
+	else:
+		add_to_group("player")
 func initialize():
 	position = calculate_destination(Vector2())
 	
@@ -66,7 +71,7 @@ func attackclick(pos):
 	print("attack")
 	emit_signal("kill")
 	var attacker = attack.instance() as Node2D
-	get_parent().add_child(attacker)
+	add_child(attacker)
 	attacker.position = self.position - get_side
 func get_ver():
 	return ver

@@ -8,6 +8,11 @@ signal kill
 var ver = 3
 var hor = 3
 export var enemy : bool
+func _ready():
+	if enemy:
+		add_to_group("enemy")
+	else:
+		add_to_group("player")
 func initialize():
 	position = calculate_destination(Vector2())
 	
