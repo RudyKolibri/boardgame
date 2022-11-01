@@ -5,18 +5,22 @@ var sliding : = false
 onready var tween : Tween = $Tween
 export var arrow : PackedScene
 signal kill
-var ver = 3
-var hor = 3
+var ver = 1
+var hor = 1
+var ver_arrow = 4
+var hor_arrow = 4
 signal done
 signal my_turn
 signal notmy
 var myturn = false
 export var enemy : bool
+export var health : int
 func _ready():
 	var _connect = self.connect("my_turn", $Archer, "myturn")
 	var _connects = self.connect("notmy", $Archer, "notmy")
 	if enemy:
 		add_to_group("enemy")
+		print("enemy")
 	else:
 		add_to_group("player")
 func initialize():
@@ -61,12 +65,16 @@ func moveclick(pos):
 	emit_signal("notmy")
 	emit_signal("done")
 func _on_Archer_click():
-	if enemy == false:
-		$inputhandler.handle(hor, ver)
+	$archerhandler.handle(hor_arrow, ver_arrow)
+	$inputhandler.handle(hor, ver)
 func get_ver():
 	return ver
 func get_hor():
 	return hor
+func get_ver_arrow():
+	return ver_arrow
+func get_hor_arrow():
+	return hor_arrow
 func attackclick(pos):
 	print("attack")
 	emit_signal("kill")
@@ -96,3 +104,10 @@ func attackclick(pos):
 func turn():
 	myturn = true
 	emit_signal("my_turn")
+func hit(damage):
+	self.health -= damage
+	if health <= 0:
+		queue_free()
+		if myturn == true:
+			emit_signal("done")
+			emit_signal("notmy")

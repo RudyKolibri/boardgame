@@ -13,6 +13,7 @@ extents = Vector2( 4, 4 )
 collision_layer = 3
 script = ExtResource( 2 )
 attack = ExtResource( 5 )
+health = 4
 
 [node name="Swordman" type="Sprite" parent="."]
 texture = ExtResource( 1 )

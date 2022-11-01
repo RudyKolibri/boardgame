@@ -7,5 +7,6 @@ func _input(event):
 			if get_rect().has_point(to_local(event.position)):
 				if $"..".get_attackstate() == false:
 					emit_signal("click", self.global_position)
+					queue_free()
 			else:
 				$"..".queue_free()

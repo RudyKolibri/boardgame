@@ -5,13 +5,14 @@ var sliding : = false
 onready var tween : Tween = $Tween
 export var attack : PackedScene
 signal kill
-var hor = 2
-var ver = 2
+var hor = 3
+var ver = 3
 signal done
 signal my_turn
 signal notmy
 var myturn = false
 export var enemy : bool
+export var health : int
 func _ready():
 	var _connect = self.connect("my_turn", $Swordman, "myturn")
 	var _connects = self.connect("notmy", $Swordman, "notmy")
@@ -81,3 +82,10 @@ func get_hor():
 func turn():
 	myturn = true
 	emit_signal("my_turn")
+func hit(damage):
+	self.health -= damage
+	if health <= 0:
+		queue_free()
+		if myturn == true:
+			emit_signal("done")
+			emit_signal("notmy")

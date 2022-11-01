@@ -29,5 +29,13 @@ position = Vector2( 4, 4 )
 scale = Vector2( 0.75, 0.75 )
 shape = SubResource( 1 )
 
+[node name="checkparent" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="checkparent"]
+position = Vector2( 4, 4 )
+scale = Vector2( 0.75, 0.75 )
+shape = SubResource( 1 )
+
 [connection signal="body_entered" from="checkenemy" to="." method="_on_checkenemy_body_entered"]
 [connection signal="body_exited" from="checkenemy" to="." method="_on_checkenemy_body_exited"]
+[connection signal="body_entered" from="checkparent" to="." method="_on_checkparent_body_entered"]

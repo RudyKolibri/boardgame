@@ -8,76 +8,79 @@ export var point : PackedScene
 func _ready():
 	$recht.add_exception($"..")
 	$links.add_exception($"..")
-	$up.add_exception($"..")
-	$down.add_exception($"..")
-	var ver = $"..".get_ver()
-	var hor = $"..".get_hor()
-	$recht.cast_to = right * hor
-	$links.cast_to = left * hor
-	$up.cast_to = up * ver
-	$down.cast_to = down * ver
+	$omhoog.add_exception($"..")
+	$omlaag.add_exception($"..")
+	var ver_arrow = $"..".get_ver_arrow()
+	var hor_arrow = $"..".get_hor_arrow()
+	$recht.cast_to = right * hor_arrow
+	$links.cast_to = left * hor_arrow
+	$omhoog.cast_to = up * ver_arrow
+	$omlaag.cast_to = down * ver_arrow
 func handle(x, y):
-	var recht = x
-	var links = x
-	var omhoog = y
-	var beneden = y
+	var recht = x - 1
+	var links = x + 1
+	var omhoog = y + 1
+	var beneden = y - 1
 	var pos = self.position
 	$recht.cast_to = right * x
 	$links.cast_to = left * x
-	$up.cast_to = up * x
-	$down.cast_to = down * x
+	$omhoog.cast_to = up * x
+	$omlaag.cast_to = down * x
 	if $recht.is_colliding():   
 		var origin = $recht.global_transform.origin
 		var collision_point = $recht.get_collision_point()
 		var distance = origin.distance_to(collision_point)
-		recht = round(distance / 8)
+		recht = round(distance / 8) - 1
 	if $links.is_colliding():   
 		var origin = $links.global_transform.origin
 		var collision_point = $links.get_collision_point()
 		var distance = origin.distance_to(collision_point)
-		links = round(distance / 8)
-	if $up.is_colliding():   
-		var origin = $up.global_transform.origin
-		var collision_point = $up.get_collision_point()
+		links = round(distance / 8) - 1
+	if $omhoog.is_colliding():   
+		var origin = $omhoog.global_transform.origin
+		var collision_point = $omhoog.get_collision_point()
 		var distance = origin.distance_to(collision_point)
-		omhoog = round(distance / 8)
-	if $down.is_colliding():   
-		var origin = $down.global_transform.origin
-		var collision_point = $down.get_collision_point()
+		omhoog = round(distance / 8) - 1
+	if $omlaag.is_colliding():   
+		var origin = $omlaag.global_transform.origin
+		var collision_point = $omlaag.get_collision_point()
 		var distance = origin.distance_to(collision_point)
-		beneden = round(distance / 8)
+		beneden = round(distance / 8) - 1
+	self.position += right
 	for i in recht :
 			self.position = self.position + right
 			var pointer = point.instance() as Node2D
 			get_parent().add_child(pointer)
 			pointer.global_position = self.global_position
+			pointer.toggle_attack()
 			var _connect = connect("kill", pointer, "kill")
 	self.position = pos
+	self.position += left
 	for i in links :
 			self.position = self.position + left
 			var pointer = point.instance() as Node2D
 			get_parent().add_child(pointer)
 			pointer.global_position = self.global_position
+			pointer.toggle_attack()
 			var _connect = connect("kill", pointer, "kill")
 	self.position = pos
+	self.position += up
 	for i in omhoog :
 			self.position = self.position + up
 			var pointer = point.instance() as Node2D
 			get_parent().add_child(pointer)
 			pointer.global_position = self.global_position
+			pointer.toggle_attack()
 			var _connect = connect("kill", pointer, "kill")
 	self.position = pos
+	self.position += down
 	for i in beneden:
 			self.position = self.position + down
 			var pointer = point.instance() as Node2D
 			get_parent().add_child(pointer)
 			pointer.global_position = self.global_position
+			pointer.toggle_attack()
 			var _connect = connect("kill", pointer, "kill")
 	self.position = pos
-func _on_swordman_kill():
-	emit_signal("kill")
-
 func _on_archer_kill():
 	emit_signal("kill")
-
-

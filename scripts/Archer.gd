@@ -8,5 +8,6 @@ func _input(event):
 				emit_signal("click")
 func myturn():
 	my = true
+	print("my")
 func notmy():
 	my = false
