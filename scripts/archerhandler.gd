@@ -17,10 +17,10 @@ func _ready():
 	$omhoog.cast_to = up * ver_arrow
 	$omlaag.cast_to = down * ver_arrow
 func handle(x, y):
-	var recht = x - 1
-	var links = x + 1
-	var omhoog = y + 1
-	var beneden = y - 1
+	var recht = x -1
+	var links = x -1
+	var omhoog = y -1
+	var beneden = y -1
 	var pos = self.position
 	$recht.cast_to = right * x
 	$links.cast_to = left * x
@@ -30,7 +30,8 @@ func handle(x, y):
 		var origin = $recht.global_transform.origin
 		var collision_point = $recht.get_collision_point()
 		var distance = origin.distance_to(collision_point)
-		recht = round(distance / 8) - 1
+		print(origin.distance_to(collision_point))
+		recht = round(distance / 8)
 	if $links.is_colliding():   
 		var origin = $links.global_transform.origin
 		var collision_point = $links.get_collision_point()
@@ -40,12 +41,12 @@ func handle(x, y):
 		var origin = $omhoog.global_transform.origin
 		var collision_point = $omhoog.get_collision_point()
 		var distance = origin.distance_to(collision_point)
-		omhoog = round(distance / 8) - 1
+		omhoog = round(distance / 8)
 	if $omlaag.is_colliding():   
 		var origin = $omlaag.global_transform.origin
 		var collision_point = $omlaag.get_collision_point()
 		var distance = origin.distance_to(collision_point)
-		beneden = round(distance / 8) - 1
+		beneden = round(distance / 8)
 	self.position += right
 	for i in recht :
 			self.position = self.position + right
