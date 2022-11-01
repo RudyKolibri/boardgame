@@ -7,8 +7,14 @@ export var arrow : PackedScene
 signal kill
 var ver = 3
 var hor = 3
+signal done
+signal my_turn
+signal notmy
+var myturn = false
 export var enemy : bool
 func _ready():
+	var _connect = self.connect("my_turn", $Archer, "myturn")
+	var _connects = self.connect("notmy", $Archer, "notmy")
 	if enemy:
 		add_to_group("enemy")
 	else:
@@ -31,8 +37,8 @@ func push(velocity: Vector2, times = 1) -> void:
 		yield(tween, "tween_completed")
 		sliding = false
 func calculate_destination(inputs):
-	var tile_map_position = $"..".world_to_map(global_position) + inputs
-	return $"..".map_to_world(tile_map_position)
+	var tile_map_position = $"../../TileMap".world_to_map(global_position) + inputs
+	return $"../../TileMap".map_to_world(tile_map_position)
 func can_move(move_to: Vector2) -> bool:
 	# Returns if the box can be moved to `move_to` without causing a collision
 	var future_transform : = Transform2D(transform)
@@ -51,6 +57,9 @@ func moveclick(pos):
 			times = - times
 	push(-move, times)
 	emit_signal("kill")
+	print("done")
+	emit_signal("notmy")
+	emit_signal("done")
 func _on_Archer_click():
 	if enemy == false:
 		$inputhandler.handle(hor, ver)
@@ -81,3 +90,9 @@ func attackclick(pos):
 		side =  Vector2(0,-8)
 		arrower.rotation_degrees = -90
 	arrower.start(side)
+	print("done")
+	emit_signal("notmy")
+	emit_signal("done")
+func turn():
+	myturn = true
+	emit_signal("my_turn")

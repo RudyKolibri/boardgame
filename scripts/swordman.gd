@@ -7,8 +7,14 @@ export var attack : PackedScene
 signal kill
 var hor = 2
 var ver = 2
+signal done
+signal my_turn
+signal notmy
+var myturn = false
 export var enemy : bool
 func _ready():
+	var _connect = self.connect("my_turn", $Swordman, "myturn")
+	var _connects = self.connect("notmy", $Swordman, "notmy")
 	if enemy:
 		add_to_group("enemy")
 	else:
@@ -32,8 +38,8 @@ func push(velocity: Vector2, times = 1) -> void:
 		sliding = false
 		
 func calculate_destination(inputs):
-	var tile_map_position = $"..".world_to_map(global_position) + inputs
-	return $"..".map_to_world(tile_map_position)
+	var tile_map_position = $"../../TileMap".world_to_map(global_position) + inputs
+	return $"../../TileMap".map_to_world(tile_map_position)
 	
 func can_move(move_to: Vector2) -> bool:
 	# Returns if the box can be moved to `move_to` without causing a collision
@@ -56,24 +62,22 @@ func moveclick(pos):
 			times = - times
 	push(-move, times)
 	emit_signal("kill")
+	emit_signal("done")
+	emit_signal("notmy")
+	print("done")
 func attackclick(pos):
 	var get_side = self.global_position - pos
-	var side = Vector2()
-	if get_side.x < 0:
-		side = "right"
-	if get_side.x > 0:
-		side = "left"
-	if get_side.y < 0:
-		side = "down"
-	if get_side.y > 0:
-		side = "up"
-	print(side)
-	print("attack")
 	emit_signal("kill")
 	var attacker = attack.instance() as Node2D
 	add_child(attacker)
 	attacker.position = self.position - get_side
+	emit_signal("done")
+	emit_signal("notmy")
+	print("done")
 func get_ver():
 	return ver
 func get_hor():
 	return hor
+func turn():
+	myturn = true
+	emit_signal("my_turn")

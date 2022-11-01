@@ -28,12 +28,24 @@ _global_script_classes=[ {
 "class": "RepositoryItem",
 "language": "GDScript",
 "path": "res://addons/github-integration/scripts/RepositoryItem.gd"
+}, {
+"base": "Node2D",
+"class": "TurnQueue",
+"language": "GDScript",
+"path": "res://scripts/turnqueue.gd"
+}, {
+"base": "Node2D",
+"class": "turnbased",
+"language": "GDScript",
+"path": "res://scripts/turnbased.gd"
 } ]
 _global_script_class_icons={
 "ContributorClass": "",
 "GistItem": "",
 "InvitationItem": "",
-"RepositoryItem": ""
+"RepositoryItem": "",
+"TurnQueue": "",
+"turnbased": ""
 }
 
 [application]
