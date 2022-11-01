@@ -1,7 +1,7 @@
 extends RigidBody2D
 
 func start(side):
-	set_linear_velocity(side * 4)
+	set_linear_velocity(side * 8)
 
 
 func _on_checkcol_body_entered(body):

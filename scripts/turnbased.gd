@@ -1,10 +1,12 @@
-extends Node2D
+extends Sprite
 class_name turnbased
 var active_character
+var normalofset = Vector2(4, 4)
 func _ready():
 	active_character = get_child(0)
 	print("hello")
 func play_turn():
+	self.offset = active_character.position + normalofset
 	print(active_character)
 	active_character.turn()
 	yield(active_character, "done")
