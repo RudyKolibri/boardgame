@@ -25,3 +25,7 @@ func _on_checkparent_body_entered(body):
 	if toggle_attacks == true:
 		if body == $"..":
 			queue_free()
+
+
+func _on_checktilemap_body_entered(body):
+	queue_free()

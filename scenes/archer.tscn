@@ -12,6 +12,7 @@ extents = Vector2( 4, 4 )
 
 [node name="archer" type="KinematicBody2D"]
 collision_layer = 3
+collision_mask = 5
 script = ExtResource( 2 )
 arrow = ExtResource( 5 )
 health = 3

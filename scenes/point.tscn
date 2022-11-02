@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://assets/movedot.png" type="Texture" id=1]
 [ext_resource path="res://assets/attackdot.png" type="Texture" id=2]
@@ -8,6 +8,9 @@
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 4, 4 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 3, 3 )
 
 [node name="point" type="Node2D"]
 script = ExtResource( 3 )
@@ -36,6 +39,15 @@ position = Vector2( 4, 4 )
 scale = Vector2( 0.75, 0.75 )
 shape = SubResource( 1 )
 
+[node name="checktilemap" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="checktilemap"]
+position = Vector2( 4, 4 )
+shape = SubResource( 2 )
+
 [connection signal="body_entered" from="checkenemy" to="." method="_on_checkenemy_body_entered"]
 [connection signal="body_exited" from="checkenemy" to="." method="_on_checkenemy_body_exited"]
 [connection signal="body_entered" from="checkparent" to="." method="_on_checkparent_body_entered"]
+[connection signal="body_entered" from="checktilemap" to="." method="_on_checktilemap_body_entered"]
