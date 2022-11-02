@@ -28,4 +28,8 @@ func _on_checkparent_body_entered(body):
 
 
 func _on_checktilemap_body_entered(body):
-	queue_free()
+	if $"..".is_in_group("archer"):
+		$Sprite.visible = false
+		attack = true
+	if attack == false:
+		queue_free()
