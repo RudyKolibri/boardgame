@@ -31,5 +31,5 @@ func _on_checktilemap_body_entered(body):
 	if $"..".is_in_group("archer"):
 		$Sprite.visible = false
 		attack = true
-	if attack == false:
+	if attack == false and body == $"../../../TileMap":
 		queue_free()
