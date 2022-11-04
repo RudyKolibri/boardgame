@@ -1,12 +1,12 @@
 extends KinematicBody2D
 var input = Vector2()
-export var sliding_time : = 0.3
+export var sliding_time : = 0.6
 var sliding : = false
 onready var tween : Tween = $Tween
 export var arrow : PackedScene
 signal kill
-var ver = 1
-var hor = 1
+var ver = 2
+var hor = 2
 var ver_arrow = 4
 var hor_arrow = 4
 signal done
@@ -20,7 +20,6 @@ func _ready():
 	var _connects = self.connect("notmy", $Archer, "notmy")
 	if enemy:
 		add_to_group("enemy")
-		print("enemy")
 	else:
 		add_to_group("player")
 func initialize():
@@ -40,6 +39,7 @@ func push(velocity: Vector2, times = 1) -> void:
 		sliding = true
 		yield(tween, "tween_completed")
 		sliding = false
+		$AudioStreamPlayer2D.playing = false
 func calculate_destination(inputs):
 	var tile_map_position = $"../../TileMap".world_to_map(global_position) + inputs
 	return $"../../TileMap".map_to_world(tile_map_position)
@@ -49,6 +49,8 @@ func can_move(move_to: Vector2) -> bool:
 	future_transform.origin = move_to
 	return not test_move(future_transform, Vector2())
 func moveclick(pos):
+	$AudioStreamPlayer2D.playing = true
+	$AnimationPlayer.play("move")
 	var times = 0
 	var move = self.global_position - pos
 	if move.x != 0:
@@ -61,7 +63,6 @@ func moveclick(pos):
 			times = - times
 	push(-move, times)
 	emit_signal("kill")
-	print("done")
 	emit_signal("notmy")
 	emit_signal("done")
 func _on_Archer_click():
@@ -76,7 +77,7 @@ func get_ver_arrow():
 func get_hor_arrow():
 	return hor_arrow
 func attackclick(pos):
-	print("attack")
+	$AudioStreamPlayer2D2.playing = true
 	emit_signal("kill")
 	var get_side = self.global_position - pos
 	var side = Vector2()
@@ -98,7 +99,6 @@ func attackclick(pos):
 		side =  Vector2(0,-8)
 		arrower.rotation_degrees = -90
 	arrower.start(side)
-	print("done")
 	emit_signal("notmy")
 	emit_signal("done")
 func turn():

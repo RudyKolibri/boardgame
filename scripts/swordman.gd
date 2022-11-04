@@ -1,6 +1,6 @@
 extends KinematicBody2D
 var input = Vector2()
-export var sliding_time : = 0.3
+export var sliding_time : = 0.6
 var sliding : = false
 onready var tween : Tween = $Tween
 export var attack : PackedScene
@@ -37,6 +37,7 @@ func push(velocity: Vector2, times = 1) -> void:
 		sliding = true
 		yield(tween, "tween_completed")
 		sliding = false
+		$AudioStreamPlayer2D.playing = false
 		
 func calculate_destination(inputs):
 	var tile_map_position = $"../../TileMap".world_to_map(global_position) + inputs
@@ -51,6 +52,8 @@ func can_move(move_to: Vector2) -> bool:
 func _on_Swordman_click():
 	$inputhandler.handle(hor, ver)
 func moveclick(pos):
+	$AnimationPlayer.play("move")
+	$AudioStreamPlayer2D.playing = true
 	var times = 0
 	var move = self.global_position - pos
 	if move.x != 0:
@@ -65,8 +68,8 @@ func moveclick(pos):
 	emit_signal("kill")
 	emit_signal("done")
 	emit_signal("notmy")
-	print("done")
 func attackclick(pos):
+	$AudioStreamPlayer2D2.playing = true
 	var get_side = self.global_position - pos
 	emit_signal("kill")
 	var attacker = attack.instance() as Node2D
@@ -74,7 +77,6 @@ func attackclick(pos):
 	attacker.position = self.position - get_side
 	emit_signal("done")
 	emit_signal("notmy")
-	print("done")
 func get_ver():
 	return ver
 func get_hor():

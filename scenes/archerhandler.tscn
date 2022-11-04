@@ -18,11 +18,11 @@ enabled = true
 collision_mask = 2
 
 [node name="omhoog" type="RayCast2D" parent="."]
-position = Vector2( 4, 0 )
+position = Vector2( 4, 8 )
 enabled = true
 collision_mask = 2
 
 [node name="omlaag" type="RayCast2D" parent="."]
-position = Vector2( 4, 8 )
+position = Vector2( 4, 0 )
 enabled = true
 collision_mask = 2
