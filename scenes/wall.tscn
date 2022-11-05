@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 4, 4 )
 
-[node name="wall" type="KinematicBody2D"]
+[node name="wall" type="KinematicBody2D" groups=["wall"]]
 collision_layer = 3
 script = ExtResource( 2 )
 health = 6

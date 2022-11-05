@@ -98,12 +98,12 @@ script = ExtResource( 3 )
 position = Vector2( 24, 56 )
 enemy = true
 
-[node name="archer2" parent="turnbased" instance=ExtResource( 5 )]
-position = Vector2( 48, 8 )
-
 [node name="swordman2" parent="turnbased" instance=ExtResource( 2 )]
 position = Vector2( 24, 8 )
 
 [node name="archer" parent="turnbased" instance=ExtResource( 5 )]
 position = Vector2( 8, 48 )
 enemy = true
+
+[node name="archer2" parent="turnbased" instance=ExtResource( 5 )]
+position = Vector2( 48, 8 )

@@ -10,6 +10,8 @@ extents = Vector2( 4, 2 )
 extents = Vector2( 2, 4 )
 
 [node name="arrow" type="RigidBody2D"]
+collision_layer = 3
+collision_mask = 3
 script = ExtResource( 2 )
 damage = 1
 
@@ -21,6 +23,7 @@ shape = SubResource( 1 )
 disabled = true
 
 [node name="checkcol" type="Area2D" parent="."]
+collision_layer = 3
 collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="checkcol"]

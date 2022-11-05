@@ -20,8 +20,10 @@ func _ready():
 	var _connects = self.connect("notmy", $Archer, "notmy")
 	if enemy:
 		add_to_group("enemy")
+		$Archer.visible = false
 	else:
 		add_to_group("player")
+		$evelarcher.visible = false
 func initialize():
 	position = calculate_destination(Vector2())
 	
@@ -106,6 +108,8 @@ func turn():
 	emit_signal("my_turn")
 func hit(damage):
 	self.health -= damage
+	$AnimationPlayer.play("move")
+	$AudioStreamPlayer2D3.playing = true
 	if health <= 0:
 		queue_free()
 		if myturn == true:

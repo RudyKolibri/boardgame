@@ -21,8 +21,8 @@ func handle(x, y):
 	var links = x -2
 	var omhoog = y -2
 	var beneden = y -2
+	print(y)
 	print(beneden)
-	print(recht)
 	var pos = self.position
 	$recht.cast_to = right * x
 	$links.cast_to = left * x
@@ -32,24 +32,24 @@ func handle(x, y):
 		var origin = $recht.global_transform.origin
 		var collision_point = $recht.get_collision_point()
 		var distance = origin.distance_to(collision_point)
-		recht = round(distance / 8)
+		recht = round(distance / 8) - recht
 	if $links.is_colliding():   
 		var origin = $links.global_transform.origin
 		var collision_point = $links.get_collision_point()
 		var distance = origin.distance_to(collision_point)
-		links = round(distance / 8)
+		links = round(distance / 8) - links
 	if $omhoog.is_colliding():   
 		var origin = $omhoog.global_transform.origin
 		var collision_point = $omhoog.get_collision_point()
 		var distance = origin.distance_to(collision_point)
-		omhoog = round(distance / 8)
+		omhoog = round(distance / 8) - omhoog
 	if $omlaag.is_colliding():   
 		var origin = $omlaag.global_transform.origin
 		var collision_point = $omlaag.get_collision_point()
 		var distance = origin.distance_to(collision_point)
-		beneden = round(distance / 8)
+		beneden = round(distance / 8) - beneden
 	self.position += right * 2
-	for i in recht - 2:
+	for i in recht:
 			self.position = self.position + right
 			var pointer = point.instance() as Node2D
 			get_parent().add_child(pointer)
@@ -58,7 +58,7 @@ func handle(x, y):
 			var _connect = connect("kill", pointer, "kill")
 	self.position = pos
 	self.position += left *2
-	for i in links - 2:
+	for i in links:
 			self.position = self.position + left
 			var pointer = point.instance() as Node2D
 			get_parent().add_child(pointer)
@@ -67,7 +67,7 @@ func handle(x, y):
 			var _connect = connect("kill", pointer, "kill")
 	self.position = pos
 	self.position += up *2
-	for i in omhoog - 2:
+	for i in omhoog:
 			self.position = self.position + up
 			var pointer = point.instance() as Node2D
 			get_parent().add_child(pointer)
@@ -77,7 +77,7 @@ func handle(x, y):
 	self.position = pos
 	self.position += down *2
 	print(beneden)
-	for i in beneden - 2:
+	for i in beneden:
 			self.position = self.position + down
 			var pointer = point.instance() as Node2D
 			get_parent().add_child(pointer)

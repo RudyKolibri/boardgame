@@ -5,9 +5,9 @@ func start(side):
 
 
 func _on_checkcol_body_entered(body):
-	if $"..".is_in_group("enemy") != body.is_in_group("enemy"):
+	if $"..".is_in_group("enemy") != body.is_in_group("enemy") or body.is_in_group("wall"):
 		if body != $"..":
 			queue_free()
 			body.hit(damage)
 	else:
-		pass
+		print("same")
