@@ -1,10 +1,12 @@
 extends Sprite
 signal click
 var my = false
+var off = Vector2(32, 32)
 func _input(event):
 	if my == true:
 		if event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_LEFT:
-			if get_rect().has_point(to_local(event.position)):
+			var eventje = off + $"../../../Camera2D".position
+			if get_rect().has_point(to_local(event.position + eventje)):
 				emit_signal("click")
 func myturn():
 	my = true
