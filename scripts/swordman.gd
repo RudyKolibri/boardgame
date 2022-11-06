@@ -10,6 +10,7 @@ var ver = 3
 signal done
 signal my_turn
 signal notmy
+signal knockbackdone
 var myturn = false
 export var enemy : bool
 export var health : int
@@ -40,6 +41,7 @@ func push(velocity: Vector2, times = 1) -> void:
 		yield(tween, "tween_completed")
 		sliding = false
 		$AudioStreamPlayer2D.playing = false
+		emit_signal("knockbackdone")
 		
 func calculate_destination(inputs):
 	var tile_map_position = $"../../TileMap".world_to_map(global_position) + inputs
@@ -86,10 +88,14 @@ func get_hor():
 func turn():
 	myturn = true
 	emit_signal("my_turn")
-func hit(damage):
+func hit(damage, knockback = Vector2.ZERO, times = 1):
+	push(knockback, times)
 	self.health -= damage
 	$AnimationPlayer.play("move")
 	$AudioStreamPlayer2D3.playing = true
+	print("test")
+	yield(self, "knockbackdone")
+	print("test")
 	if health <= 0:
 		$AudioStreamPlayer2D4.play()
 		yield($AudioStreamPlayer2D4, "finished")
