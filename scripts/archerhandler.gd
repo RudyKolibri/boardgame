@@ -21,8 +21,6 @@ func handle(x, y):
 	var links = x -2
 	var omhoog = y -2
 	var beneden = y -2
-	print(y)
-	print(beneden)
 	var pos = self.position
 	$recht.cast_to = right * x
 	$links.cast_to = left * x
@@ -76,7 +74,6 @@ func handle(x, y):
 			var _connect = connect("kill", pointer, "kill")
 	self.position = pos
 	self.position += down *2
-	print(beneden)
 	for i in beneden:
 			self.position = self.position + down
 			var pointer = point.instance() as Node2D

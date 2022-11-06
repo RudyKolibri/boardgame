@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://assets/swordman.png" type="Texture" id=1]
 [ext_resource path="res://scripts/swordman.gd" type="Script" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://sounds/sword.mp3" type="AudioStream" id=7]
 [ext_resource path="res://sounds/hit.mp3" type="AudioStream" id=8]
 [ext_resource path="res://assets/swordmanevel.png" type="Texture" id=9]
+[ext_resource path="res://sounds/dead2.mp3" type="AudioStream" id=10]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 4, 4 )
@@ -106,6 +107,10 @@ stream = ExtResource( 7 )
 
 [node name="AudioStreamPlayer2D3" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 8 )
+
+[node name="AudioStreamPlayer2D4" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 10 )
+volume_db = 10.0
 
 [connection signal="kill" from="." to="inputhandler" method="_on_swordman_kill"]
 [connection signal="click" from="Swordman" to="." method="_on_Swordman_click"]

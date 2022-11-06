@@ -91,6 +91,8 @@ func hit(damage):
 	$AnimationPlayer.play("move")
 	$AudioStreamPlayer2D3.playing = true
 	if health <= 0:
+		$AudioStreamPlayer2D4.play()
+		yield($AudioStreamPlayer2D4, "finished")
 		queue_free()
 		if myturn == true:
 			emit_signal("done")
