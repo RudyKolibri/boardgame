@@ -5,12 +5,12 @@ var attack = false
 var toggle_attacks = false
 func _ready():
 	set_as_toplevel(true)
-func _on_checkenemy_body_entered(_body):
-	if toggle_attacks == false:
+func _on_checkenemy_body_entered(body):
+	if toggle_attacks == false and body == $"../..":
 		$Sprite.visible = false
 		attack = true
-func _on_checkenemy_body_exited(_body):
-	if toggle_attacks == false:
+func _on_checkenemy_body_exited(body):
+	if toggle_attacks == false and body == $"../..":
 		$Sprite.visible = true
 		attack = false
 func kill():

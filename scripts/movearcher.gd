@@ -17,6 +17,7 @@ var myturn = false
 export var enemy : bool
 export var health : int
 func _ready():
+	$"../../TileMap".setting(self.position, 3)
 	var _connect = self.connect("my_turn", $Archer, "myturn")
 	var _connects = self.connect("notmy", $Archer, "notmy")
 	if enemy:
@@ -44,6 +45,7 @@ func push(velocity: Vector2, times = 1) -> void:
 		sliding = false
 		$AudioStreamPlayer2D.playing = false
 		emit_signal("knockbackdone")
+		$"../TileMap".setting(self.position, 3)
 func calculate_destination(inputs):
 	var tile_map_position = $"../../TileMap".world_to_map(global_position) + inputs
 	return $"../../TileMap".map_to_world(tile_map_position)
@@ -53,6 +55,7 @@ func can_move(move_to: Vector2) -> bool:
 	future_transform.origin = move_to
 	return not test_move(future_transform, Vector2())
 func moveclick(pos):
+	$"../TileMap".setting(self.position, 1)
 	$AudioStreamPlayer2D.playing = true
 	$AnimationPlayer.play("move")
 	var times = 0
@@ -118,6 +121,7 @@ func hit(damage, knockback = Vector2.ZERO, times = 1):
 	if health <= 0:
 		$AudioStreamPlayer2D4.play()
 		yield($AudioStreamPlayer2D4, "finished")
+		$"../../TileMap".setting(self.position, 3)
 		queue_free()
 		if myturn == true:
 			emit_signal("done")

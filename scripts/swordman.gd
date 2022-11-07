@@ -15,6 +15,7 @@ var myturn = false
 export var enemy : bool
 export var health : int
 func _ready():
+	$"../../TileMap".setting(self.position, 3)
 	var _connect = self.connect("my_turn", $Swordman, "myturn")
 	var _connects = self.connect("notmy", $Swordman, "notmy")
 	if enemy:
@@ -41,6 +42,7 @@ func push(velocity: Vector2, times = 1) -> void:
 		yield(tween, "tween_completed")
 		sliding = false
 		$AudioStreamPlayer2D.playing = false
+		$"../../TileMap".setting(self.position, 3)
 		emit_signal("knockbackdone")
 		
 func calculate_destination(inputs):
@@ -56,6 +58,7 @@ func can_move(move_to: Vector2) -> bool:
 func _on_Swordman_click():
 	$inputhandler.handle(hor, ver)
 func moveclick(pos):
+	$"../../TileMap".setting(self.position, 1)
 	$AnimationPlayer.play("move")
 	$AudioStreamPlayer2D.playing = true
 	var times = 0
@@ -86,8 +89,11 @@ func get_ver():
 func get_hor():
 	return hor
 func turn():
-	myturn = true
-	emit_signal("my_turn")
+	if enemy != true:
+		myturn = true
+		emit_signal("my_turn")
+	else:
+		print($path.getnext())
 func hit(damage, knockback = Vector2.ZERO, times = 1):
 	push(knockback, times)
 	self.health -= damage
@@ -99,6 +105,7 @@ func hit(damage, knockback = Vector2.ZERO, times = 1):
 	if health <= 0:
 		$AudioStreamPlayer2D4.play()
 		yield($AudioStreamPlayer2D4, "finished")
+		$"../../TileMap".setting(self.position, 1)
 		queue_free()
 		if myturn == true:
 			emit_signal("done")
