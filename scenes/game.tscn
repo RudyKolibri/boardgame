@@ -109,7 +109,6 @@ script = ExtResource( 8 )
 polygon = PoolVector2Array( 0, 0, 64, 0, 64, 64, 0, 64, 0, -24, -24, -24, -24, 88, 88, 88, 88, -24, 0, -24, 0, -8 )
 
 [node name="wall" parent="." instance=ExtResource( 4 )]
-visible = false
 position = Vector2( 32, 24 )
 
 [node name="wall2" parent="." instance=ExtResource( 4 )]
