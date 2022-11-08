@@ -45,7 +45,7 @@ func push(velocity: Vector2, times = 1) -> void:
 		sliding = false
 		$AudioStreamPlayer2D.playing = false
 		emit_signal("knockbackdone")
-		$"../TileMap".make_bussy(self.global_position, true)
+		$"../../TileMap".make_bussy(self.global_position, true)
 func calculate_destination(inputs):
 	var tile_map_position = $"../../TileMap".world_to_map(global_position) + inputs
 	return $"../../TileMap".map_to_world(tile_map_position)
