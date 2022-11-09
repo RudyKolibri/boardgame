@@ -1,0 +1,135 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "HBoxContainer",
+"class": "ContributorClass",
+"language": "GDScript",
+"path": "res://addons/github-integration/scripts/ContributorClass.gd"
+}, {
+"base": "PanelContainer",
+"class": "GistItem",
+"language": "GDScript",
+"path": "res://addons/github-integration/scripts/GistItem.gd"
+}, {
+"base": "HBoxContainer",
+"class": "InvitationItem",
+"language": "GDScript",
+"path": "res://addons/github-integration/scripts/InvitationItem.gd"
+}, {
+"base": "PanelContainer",
+"class": "RepositoryItem",
+"language": "GDScript",
+"path": "res://addons/github-integration/scripts/RepositoryItem.gd"
+}, {
+"base": "Node2D",
+"class": "TurnQueue",
+"language": "GDScript",
+"path": "res://scripts/turnqueue.gd"
+}, {
+"base": "Sprite",
+"class": "turnbased",
+"language": "GDScript",
+"path": "res://scripts/turnbased.gd"
+} ]
+_global_script_class_icons={
+"ContributorClass": "",
+"GistItem": "",
+"InvitationItem": "",
+"RepositoryItem": "",
+"TurnQueue": "",
+"turnbased": ""
+}
+
+[application]
+
+config/name="boardgame"
+run/main_scene="res://scenes/game.tscn"
+config/icon="res://icon.png"
+
+[autoload]
+
+PluginSettings="*res://addons/github-integration/scripts/PluginSettings.gd"
+IconLoaderGithub="*res://addons/github-integration/scripts/IconLoaderGithub.gd"
+UserData="*res://addons/github-integration/scripts/user_data.gd"
+RestHandler="*res://addons/github-integration/scenes/RestHandler.tscn"
+
+[display]
+
+window/size/width=64
+window/size/height=64
+window/size/test_width=640
+window/size/test_height=640
+window/stretch/mode="2d"
+window/stretch/aspect="keep"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/github-integration/plugin.cfg" )
+
+[global]
+
+col=false
+
+[gui]
+
+common/drop_mouse_on_gui_input_disabled=true
+
+[importer_defaults]
+
+texture={
+"compress/bptc_ldr": 0,
+"compress/hdr_mode": 0,
+"compress/lossy_quality": 0.7,
+"compress/mode": 0,
+"compress/normal_map": 0,
+"detect_3d": true,
+"flags/anisotropic": false,
+"flags/filter": false,
+"flags/mipmaps": false,
+"flags/repeat": 0,
+"flags/srgb": 2,
+"process/HDR_as_SRGB": false,
+"process/fix_alpha_border": true,
+"process/invert_color": false,
+"process/normal_map_invert_y": false,
+"process/premult_alpha": false,
+"size_limit": 0,
+"stream": false,
+"svg/scale": 1.0
+}
+mp3={
+"loop": false,
+"loop_offset": 0
+}
+
+[input]
+
+click={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+
+[layer_names]
+
+2d_physics/layer_1="player"
+2d_physics/layer_2="walls"
+2d_physics/layer_3="enemy"
+
+[physics]
+
+common/enable_pause_aware_picking=true
+2d/default_gravity=0
+2d/default_gravity_vector=Vector2( 0, 0 )
+
+[rendering]
+
+environment/default_environment="res://default_env.tres"

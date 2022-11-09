@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/bow.mp3-cad02b04b432bba064f177d98d2701ab.mp3str"
+
+[deps]
+
+source_file="res://sounds/bow.mp3"
+dest_files=[ "res://.import/bow.mp3-cad02b04b432bba064f177d98d2701ab.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

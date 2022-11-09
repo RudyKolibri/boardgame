@@ -55,7 +55,7 @@ func can_move(move_to: Vector2) -> bool:
 	future_transform.origin = move_to
 	return not test_move(future_transform, Vector2())
 func moveclick(pos):
-	$"../TileMap".make_bussy(self.global_position, false)
+	$"../../TileMap".make_bussy(self.global_position, false)
 	$AudioStreamPlayer2D.playing = true
 	$AnimationPlayer.play("move")
 	var times = 0
@@ -109,8 +109,25 @@ func attackclick(pos):
 	emit_signal("notmy")
 	emit_signal("done")
 func turn():
-	myturn = true
-	emit_signal("my_turn")
+	if enemy != true:
+		myturn = true
+		emit_signal("my_turn")
+	else:
+		var t = Timer.new()
+		t.set_wait_time(0.35)
+		t.set_one_shot(true)
+		self.add_child(t)
+		t.start()
+		yield(t, "timeout")
+		t.queue_free()
+		var path = $path.getnext()
+		if not path == null:
+			var pushing = (path * 8) - self.global_position
+			print(pushing)
+			push(pushing, 1)
+		emit_signal("done")
+		emit_signal("notmy")
+		print("hello")
 func hit(damage, knockback = Vector2.ZERO, times = 1):
 	$"../../TileMap".make_bussy(self.global_position, false)
 	push(knockback, times)
