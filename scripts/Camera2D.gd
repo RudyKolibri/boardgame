@@ -1,18 +1,10 @@
 extends Camera2D
 var _target_zoom: float = 1.0
-const MIN_ZOOM: float = 0.1
+const MIN_ZOOM: float = 0.5
 const MAX_ZOOM: float = 1.0
 const ZOOM_INCREMENT: float = 100.0
-const ZOOM_RATE: float = 800000.0
-func _physics_process(delta: float) -> void:
-	zoom = lerp(
-		zoom,
-		_target_zoom * Vector2.ONE,
-		ZOOM_RATE * delta
-	)
-	set_physics_process(
-		not is_equal_approx(zoom.x, _target_zoom)
-	)
+const ZOOM_RATE: float = 1.0
+var zoomings = 0
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		if event.button_mask == BUTTON_MASK_MIDDLE:
@@ -20,12 +12,23 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.is_pressed():
 			if event.button_index == BUTTON_WHEEL_UP:
-				zoom_in()
-			if event.button_index == BUTTON_WHEEL_UP:
-				zoom_out()
-func zoom_in() -> void:
-	_target_zoom = max(_target_zoom - ZOOM_INCREMENT, MIN_ZOOM)
-	set_physics_process(true)
-func zoom_out() -> void:
-	_target_zoom = max(_target_zoom - ZOOM_INCREMENT, MAX_ZOOM)
-	set_physics_process(true)
+				zoomings += 0.2
+				zoom(zoomings)
+			if event.button_index == BUTTON_WHEEL_DOWN:
+				zoomings -= 0.22
+				zoom(zoomings)
+func zoom(zooming) -> void:
+	var zoom
+	if zooming > 0:
+		zoom = zooming
+		if zoom > 1:
+			zoom = 1
+	if zooming < 0:
+		zoom = zooming
+		if zoom < -1:
+			zoom = -1
+	var tween = create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(self, "zoom:x", zoom, MAX_ZOOM)
+	tween.tween_property(self, "zoom:y", zoom, MAX_ZOOM)
+

@@ -3,11 +3,14 @@ var astar = AStar2D.new()
 var prev
 var first
 var active_dot
-var index = 1
+var index = 0
 var offset = Vector2(4, 4)
 onready var used_cells = $"../../../TileMap".get_used_cells_by_id(1)
 onready var bussy_cell = []
+var positionspath = []
 func _ready():
+	for point in get_child_count():
+		positionspath.append(get_child(point).global_position)
 	yield($"../../..", "start")
 	bussy_cell = $"../../../TileMap".get_bussy()
 	for cell in bussy_cell:
@@ -49,9 +52,8 @@ func id(point):
 	return (a + b)  * (a + b + 1) / 2 + b
 func getnext():
 	var array
-	active_dot = get_child(index)
-	if get_child(index).position == $"..".position:
-		print("new index")
+	if positionspath[index] == $"..".global_position:
+		active_dot = get_child(index)
 		index = (active_dot.get_index() + 1) % get_child_count()
 	astar.clear()
 	$"../../../Line2D".clear_points()
@@ -70,10 +72,10 @@ func getnext():
 			var next_cell = cell + buur
 			if used_cells.has(next_cell):
 				astar.connect_points(id(cell), id(next_cell))
-	var pos = get_child(index).global_position
+	var pos = positionspath[index]
+	print(pos)
 	var posworld = $"../../../TileMap".world_to_map(pos)
 	if used_cells.has(posworld):
 		var startpos = $"../../../TileMap".world_to_map($"..".global_position)
 		array = path(id(startpos), id(posworld))
-		print(array[1])
 		return array[1]

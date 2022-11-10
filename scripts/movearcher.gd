@@ -123,7 +123,7 @@ func turn():
 		var path = $path.getnext()
 		if not path == null:
 			var pushing = (path * 8) - self.global_position
-			print(pushing)
+			$"../../TileMap".make_bussy(self.global_position, false)
 			push(pushing, 1)
 		emit_signal("done")
 		emit_signal("notmy")
