@@ -113,21 +113,31 @@ func turn():
 		myturn = true
 		emit_signal("my_turn")
 	else:
-		var t = Timer.new()
-		t.set_wait_time(0.35)
-		t.set_one_shot(true)
-		self.add_child(t)
-		t.start()
-		yield(t, "timeout")
-		t.queue_free()
-		var path = $path.getnext()
-		if not path == null:
-			var pushing = (path * 8) - self.global_position
-			$"../../TileMap".make_bussy(self.global_position, false)
-			push(pushing, 1)
-		emit_signal("done")
-		emit_signal("notmy")
-		print("hello")
+		var colliding = $attackcontrol.getcol()
+		if colliding == Vector2.ZERO:
+			var t = Timer.new()
+			t.set_wait_time(0.35)
+			t.set_one_shot(true)
+			self.add_child(t)
+			t.start()
+			yield(t, "timeout")
+			t.queue_free()
+			var path = $path.getnext()
+			if not path == null:
+				var pushing = (path * 8) - self.global_position
+				$"../../TileMap".make_bussy(self.global_position, false)
+				push(pushing, 1)
+			emit_signal("done")
+		else:
+			var t = Timer.new()
+			t.set_wait_time(0.35)
+			t.set_one_shot(true)
+			self.add_child(t)
+			t.start()
+			yield(t, "timeout")
+			t.queue_free()
+			attackclick(colliding)
+			emit_signal("done")
 func hit(damage, knockback = Vector2.ZERO, times = 1):
 	$"../../TileMap".make_bussy(self.global_position, false)
 	push(knockback, times)

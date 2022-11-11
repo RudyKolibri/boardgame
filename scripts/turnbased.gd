@@ -7,9 +7,7 @@ func _ready():
 func play_turn():
 	self.offset = active_character.position + normalofset
 	active_character.turn()
-	print(active_character)
 	yield(active_character, "done")
-	print("next")
 	var new_index: int = (active_character.get_index() + 1) % get_child_count()
 	active_character = get_child(new_index)
 	var t = Timer.new()

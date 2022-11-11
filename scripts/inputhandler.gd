@@ -76,7 +76,6 @@ func handle(x, y):
 	self.position = pos
 func _on_swordman_kill():
 	emit_signal("kill")
-
 func _on_archer_kill():
 	emit_signal("kill")
 

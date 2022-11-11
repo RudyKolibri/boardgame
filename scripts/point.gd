@@ -7,7 +7,6 @@ func _ready():
 	set_as_toplevel(true)
 func _on_checkenemy_body_entered(body):
 	if toggle_attacks == false and body != $"..":
-		print("test")
 		$Sprite.visible = false
 		attack = true
 func _on_checkenemy_body_exited(body):

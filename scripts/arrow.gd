@@ -8,7 +8,9 @@ func start(side):
 
 
 func _on_checkcol_body_entered(body):
-	if $"..".is_in_group("enemy") != body.is_in_group("enemy") or body.is_in_group("wall"):
+	if body == $"../../../TileMap":
+		pass
+	elif $"..".is_in_group("enemy") != body.is_in_group("enemy") or body.is_in_group("wall"):
 		if body != $"..":
 			queue_free()
 			body.hit(damage, knockback, times)

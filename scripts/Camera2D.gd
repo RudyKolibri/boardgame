@@ -18,17 +18,9 @@ func _unhandled_input(event: InputEvent) -> void:
 				zoomings -= 0.22
 				zoom(zoomings)
 func zoom(zooming) -> void:
-	var zoom
-	if zooming > 0:
-		zoom = zooming
-		if zoom > 1:
-			zoom = 1
-	if zooming < 0:
-		zoom = zooming
-		if zoom < -1:
-			zoom = -1
+	var zoom = 1.0 - zooming
 	var tween = create_tween()
 	tween.set_parallel(true)
-	tween.tween_property(self, "zoom:x", zoom, MAX_ZOOM)
-	tween.tween_property(self, "zoom:y", zoom, MAX_ZOOM)
+	tween.tween_property(self, "zoom:x", zoom, 1)
+	tween.tween_property(self, "zoom:y", zoom, 1)
 

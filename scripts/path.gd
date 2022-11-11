@@ -73,7 +73,6 @@ func getnext():
 			if used_cells.has(next_cell):
 				astar.connect_points(id(cell), id(next_cell))
 	var pos = positionspath[index]
-	print(pos)
 	var posworld = $"../../../TileMap".world_to_map(pos)
 	if used_cells.has(posworld):
 		var startpos = $"../../../TileMap".world_to_map($"..".global_position)

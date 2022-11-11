@@ -70,9 +70,9 @@ tracks/1/keys = {
 "values": [ 0.0, 5.0, -5.0, 5.0, -5.0, 5.0, 0.0 ]
 }
 
-[node name="swordman" type="KinematicBody2D"]
+[node name="swordman" type="KinematicBody2D" groups=["body"]]
 collision_layer = 3
-collision_mask = 5
+collision_mask = 7
 script = ExtResource( 2 )
 attack = ExtResource( 5 )
 health = 4
