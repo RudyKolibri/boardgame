@@ -165,7 +165,6 @@ position = Vector2( 16, -8 )
 position = Vector2( 120, 112 )
 
 [node name="Line2D" type="Line2D" parent="."]
-visible = false
 width = 1.0
 
 [node name="wall" parent="." instance=ExtResource( 5 )]

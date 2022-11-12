@@ -60,9 +60,7 @@ func getnext():
 	used_cells = $"../../../TileMap".get_used_cells_by_id(1)
 	bussy_cell = $"../../../TileMap".get_bussy()
 	for cell in bussy_cell:
-		if cell == $"../../../TileMap".world_to_map($"..".global_position):
-			pass
-		else:
+		if not cell == $"../../../TileMap".world_to_map($"..".global_position):
 			used_cells.erase(cell)
 	for cell in used_cells:
 		astar.add_point(id(cell), cell)
@@ -77,4 +75,10 @@ func getnext():
 	if used_cells.has(posworld):
 		var startpos = $"../../../TileMap".world_to_map($"..".global_position)
 		array = path(id(startpos), id(posworld))
+		#here
+		array.remove(0)
+		for i in array.size():
+			if array.size() >= 3:
+				if array[0].y - array[1].y == array[1].y - array[2].y or array[0].x - array[1].x == array[1].x - array[2].x:
+					 array.remove(1)
 		return array[1]
