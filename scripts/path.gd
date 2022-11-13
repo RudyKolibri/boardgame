@@ -80,5 +80,5 @@ func getnext():
 		for i in array.size():
 			if array.size() >= 3:
 				if array[0].y - array[1].y == array[1].y - array[2].y or array[0].x - array[1].x == array[1].x - array[2].x:
-					 array.remove(1)
-		return array[1]
+					 array.remove(0)
+		return array[0]
