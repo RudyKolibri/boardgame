@@ -76,9 +76,9 @@ func getnext():
 		var startpos = $"../../../TileMap".world_to_map($"..".global_position)
 		array = path(id(startpos), id(posworld))
 		#here
-		array.remove(0)
+		#array.remove(0)
 		for i in array.size():
 			if array.size() >= 3:
 				if array[0].y - array[1].y == array[1].y - array[2].y or array[0].x - array[1].x == array[1].x - array[2].x:
 					 array.remove(0)
-		return array[0]
+		return array[1]
