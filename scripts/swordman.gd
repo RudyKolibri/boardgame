@@ -13,7 +13,12 @@ signal my_turn
 signal notmy
 signal selfdone
 signal knockbackdone
+
 var myturn = false
+var chase_after = null
+var chase = 0 #number of turns since start chasing
+var is_chasing = false
+
 export var enemy : bool
 export var health : int
 func _ready():
@@ -129,6 +134,9 @@ func turn():
 					#print(times)
 					$"../../TileMap".make_bussy(self.global_position, false)
 					push(pushing, times)
+			chase += 1
+			if chase > 5:
+				is_chasing = false
 			emit_signal("done")
 		if colliding == Vector2.ZERO:
 			var path = $path.getnext()
@@ -158,7 +166,9 @@ func turn():
 		else:
 			attackclick(colliding)
 			emit_signal("done")
-func hit(damage, knockback = Vector2.ZERO, times = 1):
+func hit(damage, knockback = Vector2.ZERO, times = 1, parent = null):
+	if parent == null:
+		chase_after = parent
 	$"../../TileMap".make_bussy(self.global_position, false)
 	push(knockback, times)
 	self.health -= damage

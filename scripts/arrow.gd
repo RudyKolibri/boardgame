@@ -13,6 +13,6 @@ func _on_checkcol_body_entered(body):
 	elif $"..".is_in_group("enemy") != body.is_in_group("enemy") or body.is_in_group("wall"):
 		if body != $"..":
 			queue_free()
-			body.hit(damage, knockback, times)
+			body.hit(damage, knockback,  times, $"..")
 	else:
 		print("same")

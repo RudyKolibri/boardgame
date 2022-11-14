@@ -151,6 +151,9 @@ func turn():
 					#print(times)
 					$"../../TileMap".make_bussy(self.global_position, false)
 					push(pushing, times)
+			chase += 1
+			if chase > 5:
+				is_chasing = false
 			emit_signal("done")
 		if colliding == Vector2.ZERO:
 			var path = $path.getnext()
@@ -181,7 +184,8 @@ func turn():
 			attackclick(colliding)
 			emit_signal("done")
 func hit(damage, knockback = Vector2.ZERO, times = 1, parent = null):
-	chase_after = parent
+	if parent == null:
+		chase_after = parent
 	$"../../TileMap".make_bussy(self.global_position, false)
 	push(knockback, times)
 	self.health -= damage

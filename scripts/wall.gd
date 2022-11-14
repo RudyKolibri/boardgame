@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
 export var health : int
-func hit(damage, _idk = 0, _t = 0):
+func hit(damage, _idk = 0, _t = 0, _d = null):
 	self.health -= damage
 	if health <= 0:
 		$"../TileMap".make_bussy(self.global_position, false)
