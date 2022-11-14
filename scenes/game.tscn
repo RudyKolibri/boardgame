@@ -126,6 +126,8 @@ position = Vector2( 16, 24 )
 
 [node name="swordman" parent="turnbased" instance=ExtResource( 2 )]
 position = Vector2( 144, 120 )
+sliding_time = null
+enemy = null
 
 [node name="archer4" parent="turnbased" instance=ExtResource( 13 )]
 position = Vector2( 96, 64 )
@@ -149,12 +151,15 @@ position = Vector2( 160, 104 )
 
 [node name="swordman3" parent="turnbased" instance=ExtResource( 2 )]
 position = Vector2( 136, 96 )
+sliding_time = null
+enemy = null
 
 [node name="archer3" parent="turnbased" instance=ExtResource( 13 )]
 position = Vector2( 120, 112 )
 
 [node name="swordman4" parent="turnbased" instance=ExtResource( 2 )]
 position = Vector2( 88, 8 )
+sliding_time = null
 enemy = true
 
 [node name="path" parent="turnbased/swordman4" instance=ExtResource( 10 )]

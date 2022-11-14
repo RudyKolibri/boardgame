@@ -82,3 +82,32 @@ func getnext():
 				if array[0].y - array[1].y == array[1].y - array[2].y or array[0].x - array[1].x == array[1].x - array[2].x:
 					 array.remove(0)
 		return array[1]
+func chase(parent):
+	var array
+	astar.clear()
+	$"../../../Line2D".clear_points()
+	used_cells = $"../../../TileMap".get_used_cells_by_id(1)
+	bussy_cell = $"../../../TileMap".get_bussy()
+	for cell in bussy_cell:
+		if not cell == $"../../../TileMap".world_to_map($"..".global_position):
+			used_cells.erase(cell)
+	for cell in used_cells:
+		astar.add_point(id(cell), cell)
+	for cell in used_cells:
+		var buren = [Vector2(1, 0), Vector2(-1, 0), Vector2(0, 1), Vector2(0, - 1)]
+		for buur in buren:
+			var next_cell = cell + buur
+			if used_cells.has(next_cell):
+				astar.connect_points(id(cell), id(next_cell))
+	var pos = parent.global_position
+	var posworld = $"../../../TileMap".world_to_map(pos)
+	if used_cells.has(posworld):
+		var startpos = $"../../../TileMap".world_to_map($"..".global_position)
+		array = path(id(startpos), id(posworld))
+		#here
+		#array.remove(0)
+		for i in array.size():
+			if array.size() >= 3:
+				if array[0].y - array[1].y == array[1].y - array[2].y or array[0].x - array[1].x == array[1].x - array[2].x:
+					 array.remove(0)
+		return array[1]
