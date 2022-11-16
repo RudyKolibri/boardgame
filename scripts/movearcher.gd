@@ -131,24 +131,19 @@ func turn():
 				var path =  $path.chase(chase_after)
 				if not path == null:
 					var times = 1
-					print(path * 8)
-					print(self.global_position)
 					var pushing = (path * 8) - self.global_position
-					print(pushing)
 					if pushing.x / 8 > 0 or pushing.x / 8 < 0:
 						times = pushing.x / 8
 						if times > hor:
 							times = hor
 						if times < 0:
 							times = - times
-					#print(pushing.y / 8)
 					if pushing.y / 8 > 0 or pushing.y / 8 < 0:
 						times = pushing.y / 8
 						if times > ver:
 							times = ver
 						if times < 0:
 							times = - times
-					#print(times)
 					$"../../TileMap".make_bussy(self.global_position, false)
 					push(pushing, times)
 			chase += 1
@@ -159,24 +154,19 @@ func turn():
 			var path = $path.getnext()
 			if not path == null:
 				var times = 1
-				print(path * 8)
-				print(self.global_position)
 				var pushing = (path * 8) - self.global_position
-				print(pushing)
 				if pushing.x / 8 > 0 or pushing.x / 8 < 0:
 					times = pushing.x / 8
 					if times > hor:
 						times = hor
 					if times < 0:
 						times = - times
-				#print(pushing.y / 8)
 				if pushing.y / 8 > 0 or pushing.y / 8 < 0:
 					times = pushing.y / 8
 					if times > ver:
 						times = ver
 					if times < 0:
 						times = - times
-				#print(times)
 				$"../../TileMap".make_bussy(self.global_position, false)
 				push(pushing, times)
 			emit_signal("done")
@@ -184,7 +174,8 @@ func turn():
 			attackclick(colliding)
 			emit_signal("done")
 func hit(damage, knockback = Vector2.ZERO, times = 1, parent = null):
-	if parent == null:
+	if not parent == null:
+		is_chasing = true
 		chase_after = parent
 	$"../../TileMap".make_bussy(self.global_position, false)
 	push(knockback, times)

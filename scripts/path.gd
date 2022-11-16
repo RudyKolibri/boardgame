@@ -42,9 +42,9 @@ func _ready():
 	var startpos = $"../../../TileMap".world_to_map(prev.global_position)
 	path(id(startpos),id(posworld))
 func path(start, end):
+	print("hello")
 	var path = astar.get_point_path(start, end)
-	for p in path:
-		$"../../../Line2D".add_point(p * 8 + offset)
+	print(path)
 	return path
 func id(point):
 	var a = point.x
@@ -75,21 +75,22 @@ func getnext():
 	if used_cells.has(posworld):
 		var startpos = $"../../../TileMap".world_to_map($"..".global_position)
 		array = path(id(startpos), id(posworld))
-		#here
-		#array.remove(0)
 		for i in array.size():
 			if array.size() >= 3:
 				if array[0].y - array[1].y == array[1].y - array[2].y or array[0].x - array[1].x == array[1].x - array[2].x:
 					 array.remove(0)
-		return array[1]
+		if array.size() > 1:
+			return array[1]
+		else:
+			return array[0]
 func chase(parent):
-	var array
+	$"../../../TileMap".make_bussy(parent.global_position, false)
 	astar.clear()
 	$"../../../Line2D".clear_points()
 	used_cells = $"../../../TileMap".get_used_cells_by_id(1)
 	bussy_cell = $"../../../TileMap".get_bussy()
 	for cell in bussy_cell:
-		if not cell == $"../../../TileMap".world_to_map($"..".global_position):
+		if not cell == $"../../../TileMap".world_to_map($"..".global_position) or not cell == $"../../../TileMap".world_to_map(parent.global_position):
 			used_cells.erase(cell)
 	for cell in used_cells:
 		astar.add_point(id(cell), cell)
@@ -99,15 +100,14 @@ func chase(parent):
 			var next_cell = cell + buur
 			if used_cells.has(next_cell):
 				astar.connect_points(id(cell), id(next_cell))
-	var pos = parent.global_position
-	var posworld = $"../../../TileMap".world_to_map(pos)
-	if used_cells.has(posworld):
+	var pos = $"../../../TileMap".world_to_map(parent.global_position)
+	if used_cells.has(pos):
+		print(true)
+		var arraytje
 		var startpos = $"../../../TileMap".world_to_map($"..".global_position)
-		array = path(id(startpos), id(posworld))
-		#here
-		#array.remove(0)
-		for i in array.size():
-			if array.size() >= 3:
-				if array[0].y - array[1].y == array[1].y - array[2].y or array[0].x - array[1].x == array[1].x - array[2].x:
-					 array.remove(0)
-		return array[1]
+		arraytje = path(id(startpos), id(pos))
+		for i in arraytje.size():
+			if arraytje.size() >= 3:
+				if arraytje[0].y - arraytje[1].y == arraytje[1].y - arraytje[2].y or arraytje[0].x - arraytje[1].x == arraytje[1].x - arraytje[2].x:
+					 arraytje.remove(0)
+		return arraytje[0]
