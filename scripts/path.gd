@@ -45,6 +45,8 @@ func path(start, end):
 	print("hello")
 	var path = astar.get_point_path(start, end)
 	print(path)
+	for p in path:
+		$"../../../Line2D".add_point(p * 8 + offset)
 	return path
 func id(point):
 	var a = point.x
@@ -84,6 +86,7 @@ func getnext():
 		else:
 			return array[0]
 func chase(parent):
+	print(parent)
 	$"../../../TileMap".make_bussy(parent.global_position, false)
 	astar.clear()
 	$"../../../Line2D".clear_points()
