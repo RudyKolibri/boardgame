@@ -1,26 +1,29 @@
 extends KinematicBody2D
-var input = Vector2()
-export var sliding_time : = 0.6
-var sliding : = false
 onready var tween : Tween = $Tween
-export var attack : PackedScene
-signal kill
+
 var hor = 3
 var ver = 3
-var bodie
+var chase = 0 
+
 signal done
 signal my_turn
 signal notmy
 signal selfdone
 signal knockbackdone
+signal kill
 
+var input = Vector2()
 var myturn = false
 var chase_after = null
-var chase = 0 #number of turns since start chasing
 var is_chasing = false
+var bodie
+var sliding : = false
 
+export var sliding_time : = 0.6
 export var enemy : bool
 export var health : int
+export var attack : PackedScene
+
 func _ready():
 	$"../../TileMap".make_bussy(self.global_position, true)
 	var _connect = self.connect("my_turn", $Swordman, "myturn")
@@ -33,7 +36,6 @@ func _ready():
 		$evelswordman.visible = false
 func initialize():
 	position = calculate_destination(Vector2())
-	
 func push(velocity: Vector2, times = 1) -> void:
 	var move_to = calculate_destination(velocity.normalized() * times)
 	if can_move(move_to):
@@ -51,17 +53,14 @@ func push(velocity: Vector2, times = 1) -> void:
 		$AudioStreamPlayer2D.playing = false
 		$"../../TileMap".make_bussy(self.global_position, true)
 		emit_signal("knockbackdone")
-		
 func calculate_destination(inputs):
 	var tile_map_position = $"../../TileMap".world_to_map(global_position) + inputs
 	return $"../../TileMap".map_to_world(tile_map_position)
-	
 func can_move(move_to: Vector2) -> bool:
 	# Returns if the box can be moved to `move_to` without causing a collision
 	var future_transform : = Transform2D(transform)
 	future_transform.origin = move_to
 	return not test_move(future_transform, Vector2())
-
 func _on_Swordman_click():
 	$inputhandler.handle(hor, ver)
 func moveclick(pos):
@@ -111,7 +110,9 @@ func turn():
 		t.queue_free()
 		if is_chasing == true:
 			if not chase_after == null:
-				var path =  $path.chase(chase_after)
+				print("in")
+				var path = $path.chase(chase_after)
+				print(path)
 				if not path == null:
 					var times = 1
 					var pushing = (path * 8) - self.global_position
@@ -130,10 +131,12 @@ func turn():
 					$"../../TileMap".make_bussy(self.global_position, false)
 					push(pushing, times)
 			chase += 1
-			if chase > 5:
+			print(chase)
+			if chase >= 5:
 				is_chasing = false
+				chase = 0
 			emit_signal("done")
-		if colliding == Vector2.ZERO:
+		elif colliding == Vector2.ZERO:
 			var path = $path.getnext()
 			if not path == null:
 				var times = 1

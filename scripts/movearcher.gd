@@ -1,24 +1,27 @@
 extends KinematicBody2D
-var input = Vector2()
-export var sliding_time : = 0.6
-var sliding : = false
+
 onready var tween : Tween = $Tween
-export var arrow : PackedScene
-signal kill
+
 var ver = 2
 var hor = 2
 var ver_arrow = 4
 var hor_arrow = 4
+var chase = 0
+
+signal kill
 signal done
 signal knockbackdone
 signal my_turn
 signal notmy
+
 var myturn = false
-
 var chase_after = null
-var chase = 0 #number of turns since start chasing
+var sliding : = false
 var is_chasing = false
+var input = Vector2()
 
+export var sliding_time : = 0.6
+export var arrow : PackedScene
 export var enemy : bool
 export var health : int
 func _ready():
@@ -33,7 +36,6 @@ func _ready():
 		$evelarcher.visible = false
 func initialize():
 	position = calculate_destination(Vector2())
-	
 func push(velocity: Vector2, times = 1) -> void:
 	var move_to = calculate_destination(velocity.normalized() * times)
 	if can_move(move_to):
@@ -128,7 +130,9 @@ func turn():
 		t.queue_free()
 		if is_chasing == true:
 			if not chase_after == null:
-				var path =  $path.chase(chase_after)
+				print("in")
+				var path = $path.chase(chase_after)
+				print(path)
 				if not path == null:
 					var times = 1
 					var pushing = (path * 8) - self.global_position
@@ -147,10 +151,12 @@ func turn():
 					$"../../TileMap".make_bussy(self.global_position, false)
 					push(pushing, times)
 			chase += 1
-			if chase > 5:
+			print(chase)
+			if chase >= 5:
 				is_chasing = false
+				chase = 0
 			emit_signal("done")
-		if colliding == Vector2.ZERO:
+		elif colliding == Vector2.ZERO:
 			var path = $path.getnext()
 			if not path == null:
 				var times = 1

@@ -42,9 +42,7 @@ func _ready():
 	var startpos = $"../../../TileMap".world_to_map(prev.global_position)
 	path(id(startpos),id(posworld))
 func path(start, end):
-	print("hello")
 	var path = astar.get_point_path(start, end)
-	print(path)
 	for p in path:
 		$"../../../Line2D".add_point(p * 8 + offset)
 	return path
@@ -86,7 +84,8 @@ func getnext():
 		else:
 			return array[0]
 func chase(parent):
-	print(parent)
+	var array
+	$"../../../TileMap".make_bussy(self.global_position, false)
 	$"../../../TileMap".make_bussy(parent.global_position, false)
 	astar.clear()
 	$"../../../Line2D".clear_points()
@@ -105,12 +104,17 @@ func chase(parent):
 				astar.connect_points(id(cell), id(next_cell))
 	var pos = $"../../../TileMap".world_to_map(parent.global_position)
 	if used_cells.has(pos):
-		print(true)
-		var arraytje
 		var startpos = $"../../../TileMap".world_to_map($"..".global_position)
-		arraytje = path(id(startpos), id(pos))
-		for i in arraytje.size():
-			if arraytje.size() >= 3:
-				if arraytje[0].y - arraytje[1].y == arraytje[1].y - arraytje[2].y or arraytje[0].x - arraytje[1].x == arraytje[1].x - arraytje[2].x:
-					 arraytje.remove(0)
-		return arraytje[0]
+		array = path(id(startpos), id(pos))
+		for i in array.size():
+			if array.size() >= 3:
+				if array[0].y - array[1].y == array[1].y - array[2].y or array[0].x - array[1].x == array[1].x - array[2].x:
+					 array.remove(0)
+		$"../../../TileMap".make_bussy(pos, true)
+		if array.size() > 1:
+			print(array[1])
+			return array[1]
+		elif array.size() == 1:
+			print(array[0])
+			return array[0]
+	$"../../../TileMap".make_bussy(self.global_position, true)
