@@ -5,7 +5,7 @@ var first
 var active_dot
 var index = 0
 var offset = Vector2(4, 4)
-onready var used_cells = $"../../../TileMap".get_used_cells_by_id(1)
+onready var used_cells = $"../../../TileMap".get_used_cells_by_id(6) + $"../../../TileMap".get_used_cells_by_id(9) + $"../../../other".get_used_cells_by_id(10) + $"../../../other".get_used_cells_by_id(11) + $"../../../other".get_used_cells_by_id(13) + $"../../../other".get_used_cells_by_id(14)
 onready var bussy_cell = []
 var positionspath = []
 func _ready():
@@ -57,7 +57,7 @@ func getnext():
 		index = (active_dot.get_index() + 1) % get_child_count()
 	astar.clear()
 	$"../../../Line2D".clear_points()
-	used_cells = $"../../../TileMap".get_used_cells_by_id(1)
+	used_cells = $"../../../TileMap".get_used_cells_by_id(6) + $"../../../TileMap".get_used_cells_by_id(9) + $"../../../other".get_used_cells_by_id(10) + $"../../../other".get_used_cells_by_id(11) + $"../../../other".get_used_cells_by_id(13) + $"../../../other".get_used_cells_by_id(14)
 	bussy_cell = $"../../../TileMap".get_bussy()
 	for cell in bussy_cell:
 		if not cell == $"../../../TileMap".world_to_map($"..".global_position):
@@ -79,17 +79,17 @@ func getnext():
 			if array.size() >= 3:
 				if array[0].y - array[1].y == array[1].y - array[2].y or array[0].x - array[1].x == array[1].x - array[2].x:
 					 array.remove(0)
-		if array.size() > 1:
+		if array.size() >= 1:
 			return array[1]
 		else:
-			return array[0]
+			return
 func chase(parent):
 	var array
 	$"../../../TileMap".make_bussy(self.global_position, false)
 	$"../../../TileMap".make_bussy(parent.global_position, false)
 	astar.clear()
 	$"../../../Line2D".clear_points()
-	used_cells = $"../../../TileMap".get_used_cells_by_id(1)
+	used_cells = $"../../../TileMap".get_used_cells_by_id(6) + $"../../../TileMap".get_used_cells_by_id(9) + $"../../../other".get_used_cells_by_id(10) + $"../../../other".get_used_cells_by_id(11) + $"../../../other".get_used_cells_by_id(13) + $"../../../other".get_used_cells_by_id(14)
 	bussy_cell = $"../../../TileMap".get_bussy()
 	for cell in bussy_cell:
 		if not cell == $"../../../TileMap".world_to_map($"..".global_position) or not cell == $"../../../TileMap".world_to_map(parent.global_position):
@@ -112,9 +112,7 @@ func chase(parent):
 					 array.remove(0)
 		$"../../../TileMap".make_bussy(pos, true)
 		if array.size() > 1:
-			print(array[1])
 			return array[1]
 		elif array.size() == 1:
-			print(array[0])
 			return array[0]
 	$"../../../TileMap".make_bussy(self.global_position, true)

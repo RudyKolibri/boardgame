@@ -10,4 +10,5 @@ func make_bussy(pos, bol):
 		bussy.append(world_to_map(pos))
 	else:
 		var find = bussy.find(world_to_map(pos))
-		bussy.remove(find)
+		if not find < 0:
+			bussy.remove(find)

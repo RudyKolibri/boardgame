@@ -8,7 +8,7 @@ func start(side):
 
 
 func _on_checkcol_body_entered(body):
-	if body == $"../../../TileMap":
+	if body.is_in_group("tilemap"):
 		pass
 	elif $"..".is_in_group("enemy") != body.is_in_group("enemy") or body.is_in_group("wall"):
 		if body != $"..":

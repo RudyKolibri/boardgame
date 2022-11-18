@@ -21,26 +21,26 @@ offset = Vector2( 4, 4 )
 position = Vector2( 1, 4 )
 enabled = true
 cast_to = Vector2( 0, 0 )
-collision_mask = 2
+collision_mask = 6
 script = ExtResource( 4 )
 
 [node name="links" type="RayCast2D" parent="."]
 position = Vector2( 7, 4 )
 enabled = true
 cast_to = Vector2( 0, 0 )
-collision_mask = 2
+collision_mask = 6
 script = ExtResource( 5 )
 
 [node name="up" type="RayCast2D" parent="."]
 position = Vector2( 4, 7 )
 enabled = true
 cast_to = Vector2( 0, 0 )
-collision_mask = 2
+collision_mask = 6
 script = ExtResource( 6 )
 
 [node name="down" type="RayCast2D" parent="."]
 position = Vector2( 4, 1 )
 enabled = true
 cast_to = Vector2( 0, 0 )
-collision_mask = 2
+collision_mask = 6
 script = ExtResource( 7 )

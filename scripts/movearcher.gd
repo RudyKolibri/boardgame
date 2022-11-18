@@ -37,22 +37,26 @@ func _ready():
 func initialize():
 	position = calculate_destination(Vector2())
 func push(velocity: Vector2, times = 1) -> void:
-	var move_to = calculate_destination(velocity.normalized() * times)
-	if can_move(move_to):
-		var _bla = tween.interpolate_property(self, 
-			"global_position",
-			global_position,
-			move_to,
-			sliding_time,
-			Tween.TRANS_CUBIC,
-			Tween.EASE_OUT)
-		var _bla2 = tween.start()
-		sliding = true
-		yield(tween, "tween_completed")
-		sliding = false
-		$AudioStreamPlayer2D.playing = false
-		emit_signal("knockbackdone")
-		$"../../TileMap".make_bussy(self.global_position, true)
+	var time = 0
+	for i in times:
+		var move_to = calculate_destination(velocity.normalized())
+		if can_move(move_to):
+			time += 1
+	var move_to = calculate_destination(velocity.normalized() * time)
+	var _bla = tween.interpolate_property(self, 
+		"global_position",
+		global_position,
+		move_to,
+		sliding_time,
+		Tween.TRANS_CUBIC,
+		Tween.EASE_OUT)
+	var _bla2 = tween.start()
+	sliding = true
+	yield(tween, "tween_completed")
+	sliding = false
+	$AudioStreamPlayer2D.playing = false
+	$"../../TileMap".make_bussy(self.global_position, true)
+	emit_signal("knockbackdone")
 func calculate_destination(inputs):
 	var tile_map_position = $"../../TileMap".world_to_map(global_position) + inputs
 	return $"../../TileMap".map_to_world(tile_map_position)
@@ -128,11 +132,12 @@ func turn():
 		t.start()
 		yield(t, "timeout")
 		t.queue_free()
-		if is_chasing == true:
+		if colliding != Vector2.ZERO:
+			attackclick(colliding)
+			emit_signal("done")
+		elif is_chasing == true:
 			if not chase_after == null:
-				print("in")
 				var path = $path.chase(chase_after)
-				print(path)
 				if not path == null:
 					var times = 1
 					var pushing = (path * 8) - self.global_position
@@ -151,12 +156,11 @@ func turn():
 					$"../../TileMap".make_bussy(self.global_position, false)
 					push(pushing, times)
 			chase += 1
-			print(chase)
 			if chase >= 5:
 				is_chasing = false
 				chase = 0
 			emit_signal("done")
-		elif colliding == Vector2.ZERO:
+		else:
 			var path = $path.getnext()
 			if not path == null:
 				var times = 1
@@ -175,9 +179,6 @@ func turn():
 						times = - times
 				$"../../TileMap".make_bussy(self.global_position, false)
 				push(pushing, times)
-			emit_signal("done")
-		else:
-			attackclick(colliding)
 			emit_signal("done")
 func hit(damage, knockback = Vector2.ZERO, times = 1, parent = null):
 	if not parent == null:
