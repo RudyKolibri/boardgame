@@ -115,7 +115,7 @@ func turn():
 		if colliding != Vector2.ZERO:
 			attackclick(colliding)
 			emit_signal("done")
-		elif is_chasing == true:
+		elif is_chasing == true and is_instance_valid(chase_after):
 			if not chase_after == null:
 				var path = $path.chase(chase_after)
 				if not path == null:

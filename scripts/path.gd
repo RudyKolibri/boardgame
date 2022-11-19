@@ -4,6 +4,7 @@ var prev
 var first
 var active_dot
 var index = 0
+var wr
 var offset = Vector2(4, 4)
 onready var used_cells = $"../../../TileMap".get_used_cells_by_id(6) + $"../../../TileMap".get_used_cells_by_id(9) + $"../../../other".get_used_cells_by_id(10) + $"../../../other".get_used_cells_by_id(11) + $"../../../other".get_used_cells_by_id(13) + $"../../../other".get_used_cells_by_id(14)
 onready var bussy_cell = []
