@@ -5,8 +5,8 @@ func _ready():
 	var _connect = connect("click", $"../..", "moveclick")
 func _input(event):
 		if event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_LEFT:
-			var eventje = $"../../../../Camera2D".global_position
-			if get_rect().has_point(to_local(event.position + eventje)):
+			var test = self.global_position - ($"../../../../Camera2D".global_position + event.position)
+			if get_rect().has_point(-test):
 				if $"..".get_attackstate() == false:
 					emit_signal("click", self.global_position)
 					queue_free()

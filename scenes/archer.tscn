@@ -71,8 +71,8 @@ tracks/1/keys = {
 }
 
 [node name="archer" type="KinematicBody2D" groups=["archer", "body"]]
-collision_layer = 3
-collision_mask = 7
+collision_layer = 259
+collision_mask = 263
 script = ExtResource( 2 )
 arrow = ExtResource( 5 )
 health = 3
@@ -113,6 +113,12 @@ stream = ExtResource( 9 )
 [node name="AudioStreamPlayer2D4" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 11 )
 volume_db = 10.0
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2( 4, 4 )
+enabled = true
+collision_mask = 7
+collide_with_areas = true
 
 [connection signal="kill" from="." to="inputhandler" method="_on_archer_kill"]
 [connection signal="click" from="Archer" to="." method="_on_Archer_click"]

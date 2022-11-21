@@ -38,11 +38,27 @@ func initialize():
 	position = calculate_destination(Vector2())
 func push(velocity: Vector2, times = 1) -> void:
 	var time = 0
-	for i in times:
-		var move_to = calculate_destination(velocity.normalized())
-		if can_move(move_to):
-			time += 1
-	var move_to = calculate_destination(velocity.normalized() * time)
+	var old_vel = velocity
+	$RayCast2D.cast_to = old_vel * times
+	var t = Timer.new()
+	t.set_wait_time(0.05)
+	t.set_one_shot(true)
+	self.add_child(t)
+	t.start()
+	yield(t, "timeout")
+	t.queue_free()
+	if $RayCast2D.is_colliding():   
+		var origin = $RayCast2D.global_transform.origin
+		var collision_point = $RayCast2D.get_collision_point()
+		var distance = origin.distance_to(collision_point)
+		var times_tile = round(distance / 8) - 1
+		if times_tile > times:
+			time = times
+		else:
+			time = times_tile
+	else:
+		time = times
+	var move_to = calculate_destination(old_vel.normalized() * time)
 	var _bla = tween.interpolate_property(self, 
 		"global_position",
 		global_position,

@@ -1,6 +1,7 @@
 extends Node2D
 signal start
 func _ready():
+	$AudioStreamPlayer2D.play()
 	$turnbased.play_turn()
 	var t = Timer.new()
 	t.set_wait_time(0.5)

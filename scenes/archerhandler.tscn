@@ -8,21 +8,25 @@ script = ExtResource( 1 )
 point = ExtResource( 2 )
 
 [node name="recht" type="RayCast2D" parent="."]
+visible = false
 position = Vector2( 1, 4 )
 enabled = true
 collision_mask = 6
 
 [node name="links" type="RayCast2D" parent="."]
+visible = false
 position = Vector2( 7, 4 )
 enabled = true
 collision_mask = 6
 
 [node name="omhoog" type="RayCast2D" parent="."]
+visible = false
 position = Vector2( 4, 7 )
 enabled = true
 collision_mask = 6
 
 [node name="omlaag" type="RayCast2D" parent="."]
+visible = false
 position = Vector2( 4, 1 )
 enabled = true
 collision_mask = 6

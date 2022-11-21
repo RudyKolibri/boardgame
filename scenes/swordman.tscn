@@ -71,8 +71,8 @@ tracks/1/keys = {
 }
 
 [node name="swordman" type="KinematicBody2D" groups=["body"]]
-collision_layer = 3
-collision_mask = 7
+collision_layer = 259
+collision_mask = 263
 script = ExtResource( 2 )
 health = 4
 attack = ExtResource( 5 )
@@ -111,6 +111,11 @@ stream = ExtResource( 8 )
 [node name="AudioStreamPlayer2D4" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 10 )
 volume_db = 10.0
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2( 4, 4 )
+enabled = true
+collision_mask = 7
 
 [connection signal="kill" from="." to="inputhandler" method="_on_swordman_kill"]
 [connection signal="click" from="Swordman" to="." method="_on_Swordman_click"]
