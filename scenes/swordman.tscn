@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=2]
 
-[ext_resource path="res://assets/swordman.png" type="Texture" id=1]
+[ext_resource path="res://assets/swormantest.png" type="Texture" id=1]
 [ext_resource path="res://scripts/swordman.gd" type="Script" id=2]
 [ext_resource path="res://scripts/swordmansprite.gd" type="Script" id=3]
 [ext_resource path="res://scenes/inputhandler.tscn" type="PackedScene" id=4]
@@ -8,7 +8,7 @@
 [ext_resource path="res://sounds/walk.mp3" type="AudioStream" id=6]
 [ext_resource path="res://sounds/sword.mp3" type="AudioStream" id=7]
 [ext_resource path="res://sounds/hit.mp3" type="AudioStream" id=8]
-[ext_resource path="res://assets/swordmanevel.png" type="Texture" id=9]
+[ext_resource path="res://assets/swormantest.evelpng.png" type="Texture" id=9]
 [ext_resource path="res://sounds/dead2.mp3" type="AudioStream" id=10]
 
 [sub_resource type="RectangleShape2D" id=1]
@@ -55,7 +55,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ 0.0, 5.0, -5.0, 5.0, -5.0, 5.0, 0.0 ]
+"values": [ 0.0, 15.0, -15.0, 15.0, -15.0, 15.0, 0.0 ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("evelswordman:rotation_degrees")
@@ -67,7 +67,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ 0.0, 5.0, -5.0, 5.0, -5.0, 5.0, 0.0 ]
+"values": [ 0.0, 15.0, -15.0, 15.0, -15.0, 15.0, 0.0 ]
 }
 
 [node name="swordman" type="KinematicBody2D" groups=["body"]]
@@ -78,13 +78,15 @@ health = 4
 attack = ExtResource( 5 )
 
 [node name="Swordman" type="Sprite" parent="."]
+position = Vector2( 4, 4 )
+scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 1 )
-offset = Vector2( 4, 4 )
 script = ExtResource( 3 )
 
 [node name="evelswordman" type="Sprite" parent="."]
+position = Vector2( 4, 4 )
+scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 9 )
-offset = Vector2( 4, 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 4, 4 )
