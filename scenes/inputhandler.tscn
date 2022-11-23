@@ -1,8 +1,7 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scripts/inputhandler.gd" type="Script" id=1]
 [ext_resource path="res://scenes/point.tscn" type="PackedScene" id=2]
-[ext_resource path="res://assets/dash.png" type="Texture" id=3]
 [ext_resource path="res://scripts/RayCast2D.gd" type="Script" id=4]
 [ext_resource path="res://scripts/links.gd" type="Script" id=5]
 [ext_resource path="res://scripts/up.gd" type="Script" id=6]
@@ -11,11 +10,6 @@
 [node name="inputhandler" type="Node2D"]
 script = ExtResource( 1 )
 point = ExtResource( 2 )
-
-[node name="Dash" type="Sprite" parent="."]
-visible = false
-texture = ExtResource( 3 )
-offset = Vector2( 4, 4 )
 
 [node name="recht" type="RayCast2D" parent="."]
 visible = false
