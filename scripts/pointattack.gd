@@ -5,7 +5,8 @@ func _ready():
 	var _connect = connect("attack", $"../..", "attackclick")
 func _input(event):
 		if event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_LEFT:
-			var test = self.global_position - ($"../../../../Camera2D".global_position + event.position)
+			var get_zoom = $"../../../../Camera2D".get_zoom()
+			var test = $"..".position - $"../../../../Camera2D".position - (event.position * get_zoom)
 			if get_rect().has_point(-test):
 				if $"..".get_attackstate() == true:
 					emit_signal("attack", self.global_position)
