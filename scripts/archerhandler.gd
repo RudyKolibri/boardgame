@@ -1,8 +1,8 @@
 extends Node2D
-var right = Vector2(8, 0)
-var left = Vector2(-8, 0)
-var up = Vector2(0, -8)
-var down = Vector2(0, 8)
+var right = Vector2(16, 0)
+var left = Vector2(-16, 0)
+var up = Vector2(0, -16)
+var down = Vector2(0, 16)
 signal kill
 export var point : PackedScene
 func _ready():
@@ -30,28 +30,28 @@ func handle(x, y):
 		var origin = $recht.global_transform.origin
 		var collision_point = $recht.get_collision_point()
 		var distance = origin.distance_to(collision_point)
-		recht = round(distance / 8) - recht
+		recht = round(distance / 16) - recht
 	if $links.is_colliding():   
 		var origin = $links.global_transform.origin
 		var collision_point = $links.get_collision_point()
 		var distance = origin.distance_to(collision_point)
-		links = round(distance / 8) - links
+		links = round(distance / 16) - links
 	if $omhoog.is_colliding():   
 		var origin = $omhoog.global_transform.origin
 		var collision_point = $omhoog.get_collision_point()
 		var distance = origin.distance_to(collision_point)
-		omhoog = round(distance / 8) - omhoog
+		omhoog = round(distance / 16) - omhoog
 	if $omlaag.is_colliding():   
 		var origin = $omlaag.global_transform.origin
 		var collision_point = $omlaag.get_collision_point()
 		var distance = origin.distance_to(collision_point)
-		beneden = round(distance / 8) - beneden
+		beneden = round(distance / 16) - beneden
 	self.position += right * 2
 	for i in recht:
 			self.position = self.position + right
 			var pointer = point.instance() as Node2D
 			get_parent().add_child(pointer)
-			pointer.global_position = self.global_position
+			pointer.global_position = self.global_position + Vector2(-4, -4)
 			pointer.toggle_attack()
 			var _connect = connect("kill", pointer, "kill")
 	self.position = pos
@@ -60,7 +60,7 @@ func handle(x, y):
 			self.position = self.position + left
 			var pointer = point.instance() as Node2D
 			get_parent().add_child(pointer)
-			pointer.global_position = self.global_position
+			pointer.global_position = self.global_position + Vector2(-4, -4)
 			pointer.toggle_attack()
 			var _connect = connect("kill", pointer, "kill")
 	self.position = pos
@@ -69,7 +69,7 @@ func handle(x, y):
 			self.position = self.position + up
 			var pointer = point.instance() as Node2D
 			get_parent().add_child(pointer)
-			pointer.global_position = self.global_position
+			pointer.global_position = self.global_position + Vector2(-4, -4)
 			pointer.toggle_attack()
 			var _connect = connect("kill", pointer, "kill")
 	self.position = pos
@@ -78,7 +78,7 @@ func handle(x, y):
 			self.position = self.position + down
 			var pointer = point.instance() as Node2D
 			get_parent().add_child(pointer)
-			pointer.global_position = self.global_position
+			pointer.global_position = self.global_position + Vector2(-4, -4)
 			pointer.toggle_attack()
 			var _connect = connect("kill", pointer, "kill")
 	self.position = pos

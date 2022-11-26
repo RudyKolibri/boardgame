@@ -4,8 +4,7 @@ var check = false
 var attack = false
 var toggle_attacks = false
 func _ready():
-	$AnimationPlayer.play("start")
-	self.position += Vector2(4,4)
+	#$AnimationPlayer.play("start")
 	set_as_toplevel(true)
 func _on_checkenemy_body_entered(body):
 	if toggle_attacks == false and body != $"..":

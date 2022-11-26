@@ -12,7 +12,7 @@
 [ext_resource path="res://sounds/dead2.mp3" type="AudioStream" id=10]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 4, 4 )
+extents = Vector2( 8, 8 )
 
 [sub_resource type="Animation" id=2]
 length = 0.001
@@ -78,24 +78,23 @@ health = 4
 attack = ExtResource( 5 )
 
 [node name="Swordman" type="Sprite" parent="."]
-position = Vector2( 4, 4 )
-scale = Vector2( 0.5, 0.5 )
+position = Vector2( 8, 8 )
 texture = ExtResource( 1 )
 script = ExtResource( 3 )
 
 [node name="evelswordman" type="Sprite" parent="."]
-position = Vector2( 4, 4 )
-scale = Vector2( 0.5, 0.5 )
+position = Vector2( 8, 8 )
 texture = ExtResource( 9 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 4, 4 )
+position = Vector2( 8, 8 )
 scale = Vector2( 0.75, 0.75 )
 shape = SubResource( 1 )
 
 [node name="Tween" type="Tween" parent="."]
 
 [node name="inputhandler" parent="." instance=ExtResource( 4 )]
+position = Vector2( 8, 8 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/RESET = SubResource( 2 )
@@ -115,7 +114,7 @@ stream = ExtResource( 10 )
 volume_db = 10.0
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
-position = Vector2( 4, 4 )
+position = Vector2( 8, 8 )
 enabled = true
 collision_mask = 7
 

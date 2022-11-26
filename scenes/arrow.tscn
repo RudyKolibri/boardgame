@@ -4,10 +4,10 @@
 [ext_resource path="res://scripts/arrow.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 4, 2 )
+extents = Vector2( 8, 4 )
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 2, 4 )
+extents = Vector2( 4, 8 )
 
 [node name="arrow" type="RigidBody2D"]
 collision_layer = 3
@@ -16,6 +16,7 @@ script = ExtResource( 2 )
 damage = 1
 
 [node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 2, 2 )
 texture = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

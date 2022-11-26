@@ -51,7 +51,7 @@ func push(velocity: Vector2, times = 1) -> void:
 		var origin = $RayCast2D.global_transform.origin
 		var collision_point = $RayCast2D.get_collision_point()
 		var distance = origin.distance_to(collision_point)
-		var times_tile = round(distance / 8) - 1
+		var times_tile = round(distance / 16) - 1
 		if times_tile > times:
 			time = times
 		else:
@@ -82,17 +82,18 @@ func can_move(move_to: Vector2) -> bool:
 	future_transform.origin = move_to
 	return not test_move(future_transform, Vector2())
 func moveclick(pos):
+	pos += Vector2(-4,-4)
 	$"../../TileMap".make_bussy(self.global_position, false)
 	$AudioStreamPlayer2D.playing = true
 	$AnimationPlayer.play("move")
 	var times = 0
 	var move = self.global_position - pos
 	if move.x != 0:
-		times = move.x / 8
+		times = move.x / 16
 		if times < 0:
 			times = - times
 	if move.y != 0:
-		times = move.y / 8
+		times = move.y / 16
 		if times < 0:
 			times = - times
 	push(-move, times)
@@ -111,6 +112,7 @@ func get_ver_arrow():
 func get_hor_arrow():
 	return hor_arrow
 func attackclick(pos):
+	pos += Vector2(-4,-4)
 	$AudioStreamPlayer2D2.playing = true
 	emit_signal("kill")
 	var get_side = self.global_position - pos
@@ -118,19 +120,19 @@ func attackclick(pos):
 	var arrower = arrow.instance() as Node2D
 	add_child(arrower)
 	arrower.global_position = self.global_position
-	arrower.position.x += 4
-	arrower.position.y += 4
+	arrower.position.x += 8
+	arrower.position.y += 8
 	if get_side.x < 0:
-		side = Vector2(8,0)
+		side = Vector2(16,0)
 		arrower.rotation_degrees = 0
 	if get_side.x > 0:
-		side =  Vector2(-8,0)
+		side =  Vector2(-16,0)
 		arrower.rotation_degrees = 180
 	if get_side.y < 0:
-		side =  Vector2(0,8)
+		side =  Vector2(0,16)
 		arrower.rotation_degrees = 90
 	if get_side.y > 0:
-		side =  Vector2(0,-8)
+		side =  Vector2(0,-16)
 		arrower.rotation_degrees = -90
 	arrower.start(side)
 	emit_signal("notmy")
@@ -156,15 +158,15 @@ func turn():
 				var path = $path.chase(chase_after)
 				if not path == null:
 					var times = 1
-					var pushing = (path * 8) - self.global_position
-					if pushing.x / 8 > 0 or pushing.x / 8 < 0:
-						times = pushing.x / 8
+					var pushing = (path * 16) - self.global_position
+					if pushing.x / 16 > 0 or pushing.x / 16 < 0:
+						times = pushing.x / 16
 						if times > hor:
 							times = hor
 						if times < 0:
 							times = - times
-					if pushing.y / 8 > 0 or pushing.y / 8 < 0:
-						times = pushing.y / 8
+					if pushing.y / 16 > 0 or pushing.y / 16 < 0:
+						times = pushing.y / 16
 						if times > ver:
 							times = ver
 						if times < 0:
@@ -180,15 +182,15 @@ func turn():
 			var path = $path.getnext()
 			if not path == null:
 				var times = 1
-				var pushing = (path * 8) - self.global_position
-				if pushing.x / 8 > 0 or pushing.x / 8 < 0:
-					times = pushing.x / 8
+				var pushing = (path * 16) - self.global_position
+				if pushing.x / 16 > 0 or pushing.x / 16 < 0:
+					times = pushing.x / 16
 					if times > hor:
 						times = hor
 					if times < 0:
 						times = - times
-				if pushing.y / 8 > 0 or pushing.y / 8 < 0:
-					times = pushing.y / 8
+				if pushing.y / 16 > 0 or pushing.y / 16 < 0:
+					times = pushing.y / 16
 					if times > ver:
 						times = ver
 					if times < 0:

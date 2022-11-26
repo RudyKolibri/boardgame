@@ -5,8 +5,8 @@ var first
 var active_dot
 var index = 0
 var wr
-var offset = Vector2(4, 4)
-onready var used_cells = $"../../../TileMap".get_used_cells_by_id(6) + $"../../../TileMap".get_used_cells_by_id(9) + $"../../../other".get_used_cells_by_id(10) + $"../../../other".get_used_cells_by_id(11) + $"../../../other".get_used_cells_by_id(13) + $"../../../other".get_used_cells_by_id(14)
+var offset = Vector2(8, 8)
+onready var used_cells = $"../../../TileMap".get_used_cells_by_id(0) + $"../../../TileMap".get_used_cells_by_id(2)
 onready var bussy_cell = []
 var positionspath = []
 func _ready():
@@ -14,11 +14,13 @@ func _ready():
 		positionspath.append(get_child(point).global_position)
 	yield($"../../..", "start")
 	bussy_cell = $"../../../TileMap".get_bussy()
-	for cell in used_cells:
-		if bussy_cell.has(cell):
-			astar.add_point(id(cell), cell, 100)
+	for cell in bussy_cell:
+		if cell == $"../../../TileMap".world_to_map($"..".global_position):
+			pass
 		else:
-			astar.add_point(id(cell), cell)
+			used_cells.erase(cell)
+	for cell in used_cells:
+		astar.add_point(id(cell), cell)
 	for cell in used_cells:
 		var buren = [Vector2(1, 0), Vector2(-1, 0), Vector2(0, 1), Vector2(0, - 1)]
 		for buur in buren:
@@ -43,7 +45,7 @@ func _ready():
 func path(start, end):
 	var path = astar.get_point_path(start, end)
 	for p in path:
-		$"../../../Line2D".add_point(p * 8 + offset)
+		$"../../../Line2D".add_point(p * 16 + offset)
 	return path
 func id(point):
 	var a = point.x
@@ -56,13 +58,13 @@ func getnext():
 		index = (active_dot.get_index() + 1) % get_child_count()
 	astar.clear()
 	$"../../../Line2D".clear_points()
-	used_cells = $"../../../TileMap".get_used_cells_by_id(6) + $"../../../TileMap".get_used_cells_by_id(9) + $"../../../other".get_used_cells_by_id(10) + $"../../../other".get_used_cells_by_id(11) + $"../../../other".get_used_cells_by_id(13) + $"../../../other".get_used_cells_by_id(14)
+	used_cells = $"../../../TileMap".get_used_cells_by_id(0) + $"../../../TileMap".get_used_cells_by_id(2)
 	bussy_cell = $"../../../TileMap".get_bussy()
+	for cell in bussy_cell:
+		if not cell == $"../../../TileMap".world_to_map($"..".global_position):
+			used_cells.erase(cell)
 	for cell in used_cells:
-		if bussy_cell.has(cell):
-			astar.add_point(id(cell), cell, 100)
-		else:
-			astar.add_point(id(cell), cell)
+		astar.add_point(id(cell), cell)
 	for cell in used_cells:
 		var buren = [Vector2(1, 0), Vector2(-1, 0), Vector2(0, 1), Vector2(0, - 1)]
 		for buur in buren:
@@ -88,13 +90,13 @@ func chase(parent):
 	$"../../../TileMap".make_bussy(parent.global_position, false)
 	astar.clear()
 	$"../../../Line2D".clear_points()
-	used_cells = $"../../../TileMap".get_used_cells_by_id(6) + $"../../../TileMap".get_used_cells_by_id(9) + $"../../../other".get_used_cells_by_id(10) + $"../../../other".get_used_cells_by_id(11) + $"../../../other".get_used_cells_by_id(13) + $"../../../other".get_used_cells_by_id(14)
+	used_cells = $"../../../TileMap".get_used_cells_by_id(0)+ $"../../../TileMap".get_used_cells_by_id(2)
 	bussy_cell = $"../../../TileMap".get_bussy()
+	for cell in bussy_cell:
+		if not cell == $"../../../TileMap".world_to_map($"..".global_position) or not cell == $"../../../TileMap".world_to_map(parent.global_position):
+			used_cells.erase(cell)
 	for cell in used_cells:
-		if bussy_cell.has(cell):
-			astar.add_point(id(cell), cell, 100)
-		else:
-			astar.add_point(id(cell), cell)
+		astar.add_point(id(cell), cell)
 	for cell in used_cells:
 		var buren = [Vector2(1, 0), Vector2(-1, 0), Vector2(0, 1), Vector2(0, - 1)]
 		for buur in buren:

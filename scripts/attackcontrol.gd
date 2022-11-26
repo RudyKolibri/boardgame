@@ -10,9 +10,9 @@ func getcol():
 			var origin = $RayCast2D.global_transform.origin
 			var collision_point = $RayCast2D.get_collision_point()
 			var distance = origin.distance_to(collision_point)
-			var idk = round(distance / 8)
+			var idk = round(distance / 16)
 			for i in idk:
-				self.global_position += Vector2(8, 0)
+				self.global_position += Vector2(16, 0)
 			var glob = self.global_position
 			self.global_position = $"..".global_position
 			return glob
@@ -21,9 +21,9 @@ func getcol():
 			var origin = $RayCast2D2.global_transform.origin
 			var collision_point = $RayCast2D2.get_collision_point()
 			var distance = origin.distance_to(collision_point)
-			var idk = round(distance / 8)
+			var idk = round(distance / 16)
 			for i in idk:
-				self.global_position += Vector2(0, 8)
+				self.global_position += Vector2(0, 16)
 			var glob = self.global_position
 			self.global_position = $"..".global_position
 			return glob
@@ -32,9 +32,9 @@ func getcol():
 			var origin = $RayCast2D3.global_transform.origin
 			var collision_point = $RayCast2D3.get_collision_point()
 			var distance = origin.distance_to(collision_point)
-			var idk = round(distance / 8)
+			var idk = round(distance / 16)
 			for i in idk:
-				self.global_position += Vector2(-8, 0)
+				self.global_position += Vector2(-16, 0)
 			var glob = self.global_position
 			self.global_position = $"..".global_position
 			return glob
@@ -43,9 +43,9 @@ func getcol():
 			var origin = $RayCast2D4.global_transform.origin
 			var collision_point = $RayCast2D4.get_collision_point()
 			var distance = origin.distance_to(collision_point)
-			var idk = round(distance / 8)
+			var idk = round(distance / 16)
 			for i in idk:
-				self.global_position += Vector2(0, -8)
+				self.global_position += Vector2(0, -16)
 			var glob = self.global_position
 			self.global_position = $"..".global_position
 			return glob
