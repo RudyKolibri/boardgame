@@ -14,13 +14,11 @@ func _ready():
 		positionspath.append(get_child(point).global_position)
 	yield($"../../..", "start")
 	bussy_cell = $"../../../TileMap".get_bussy()
-	for cell in bussy_cell:
-		if cell == $"../../../TileMap".world_to_map($"..".global_position):
-			pass
-		else:
-			used_cells.erase(cell)
 	for cell in used_cells:
-		astar.add_point(id(cell), cell)
+		if bussy_cell.has(cell) and not cell == $"../../../TileMap".world_to_map($"..".global_position):
+			astar.add_point(id(cell), cell, 100)
+		else:
+			astar.add_point(id(cell), cell, 1)
 	for cell in used_cells:
 		var buren = [Vector2(1, 0), Vector2(-1, 0), Vector2(0, 1), Vector2(0, - 1)]
 		for buur in buren:
@@ -60,11 +58,11 @@ func getnext():
 	$"../../../Line2D".clear_points()
 	used_cells = $"../../../TileMap".get_used_cells_by_id(0) + $"../../../TileMap".get_used_cells_by_id(2)
 	bussy_cell = $"../../../TileMap".get_bussy()
-	for cell in bussy_cell:
-		if not cell == $"../../../TileMap".world_to_map($"..".global_position):
-			used_cells.erase(cell)
 	for cell in used_cells:
-		astar.add_point(id(cell), cell)
+		if bussy_cell.has(cell) and not cell == $"../../../TileMap".world_to_map($"..".global_position):
+			astar.add_point(id(cell), cell, 100)
+		else:
+			astar.add_point(id(cell), cell, 1)
 	for cell in used_cells:
 		var buren = [Vector2(1, 0), Vector2(-1, 0), Vector2(0, 1), Vector2(0, - 1)]
 		for buur in buren:
@@ -92,11 +90,11 @@ func chase(parent):
 	$"../../../Line2D".clear_points()
 	used_cells = $"../../../TileMap".get_used_cells_by_id(0)+ $"../../../TileMap".get_used_cells_by_id(2)
 	bussy_cell = $"../../../TileMap".get_bussy()
-	for cell in bussy_cell:
-		if not cell == $"../../../TileMap".world_to_map($"..".global_position) or not cell == $"../../../TileMap".world_to_map(parent.global_position):
-			used_cells.erase(cell)
 	for cell in used_cells:
-		astar.add_point(id(cell), cell)
+		if bussy_cell.has(cell) and not cell == $"../../../TileMap".world_to_map($"..".global_position):
+			astar.add_point(id(cell), cell, 100)
+		else:
+			astar.add_point(id(cell), cell, 1)
 	for cell in used_cells:
 		var buren = [Vector2(1, 0), Vector2(-1, 0), Vector2(0, 1), Vector2(0, - 1)]
 		for buur in buren:

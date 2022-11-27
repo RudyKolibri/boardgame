@@ -166,16 +166,16 @@ func turn():
 				var pushing = (path * 16) - self.global_position
 				if pushing.x / 16 > 0 or pushing.x / 16 < 0:
 					times = pushing.x / 16
+					if times < 0:
+						times = - times
 					if times > hor:
 						times = hor
-					if times < 0:
-						times = - times
 				if pushing.y / 16 > 0 or pushing.y / 16 < 0:
 					times = pushing.y / 16
-					if times > ver:
-						times = ver
 					if times < 0:
 						times = - times
+					if times > ver:
+						times = ver
 				$"../../TileMap".make_bussy(self.global_position, false)
 				push(pushing, times)
 			emit_signal("done")
