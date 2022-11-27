@@ -70,7 +70,6 @@ position = Vector2( 160, 64 )
 
 [node name="archer" parent="turnbased" instance=ExtResource( 13 )]
 position = Vector2( 16, 48 )
-enemy = true
 
 [node name="attackcontrol" parent="turnbased/archer" instance=ExtResource( 8 )]
 
