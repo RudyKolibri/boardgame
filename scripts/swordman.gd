@@ -6,8 +6,6 @@ var ver = 3
 var chase = 0 
 
 signal done
-signal my_turn
-signal notmy
 signal selfdone
 signal knockbackdone
 signal kill
@@ -26,8 +24,6 @@ export var attack : PackedScene
 
 func _ready():
 	$"../../TileMap".make_bussy(self.global_position, true)
-	var _connect = self.connect("my_turn", $Swordman, "myturn")
-	var _connects = self.connect("notmy", $Swordman, "notmy")
 	if enemy:
 		add_to_group("enemy")
 		$Swordman.visible = false
@@ -81,8 +77,6 @@ func can_move(move_to: Vector2) -> bool:
 	var future_transform : = Transform2D(transform)
 	future_transform.origin = move_to
 	return not test_move(future_transform, Vector2())
-func _on_Swordman_click():
-	$inputhandler.handle(hor, ver)
 func moveclick(pos):
 	print(pos)
 	pos += Vector2(-4,-4)
@@ -101,8 +95,8 @@ func moveclick(pos):
 			times = - times
 	push(-move, times)
 	emit_signal("kill")
+	myturn = false
 	emit_signal("done")
-	emit_signal("notmy")
 func attackclick(pos):
 	pos += Vector2(-4,-4)
 	$AudioStreamPlayer2D2.playing = true
@@ -112,8 +106,8 @@ func attackclick(pos):
 	add_child(attacker)
 	attacker.position = self.position - get_side + Vector2(8,8)
 	emit_signal("done")
+	myturn = false
 	emit_signal("selfdone")
-	emit_signal("notmy")
 func get_ver():
 	return ver
 func get_hor():
@@ -121,7 +115,6 @@ func get_hor():
 func turn():
 	if enemy != true:
 		myturn = true
-		emit_signal("my_turn")
 	else:
 		var colliding = $attackcontrol.getcol()
 		var t = Timer.new()
@@ -133,6 +126,7 @@ func turn():
 		t.queue_free()
 		if colliding != Vector2.ZERO:
 			attackclick(colliding)
+			myturn = false
 			emit_signal("done")
 		elif is_chasing == true and is_instance_valid(chase_after):
 			if not chase_after == null:
@@ -158,6 +152,7 @@ func turn():
 			if chase >= 5:
 				is_chasing = false
 				chase = 0
+			myturn = false
 			emit_signal("done")
 		else:
 			var path = $path.getnext()
@@ -178,6 +173,7 @@ func turn():
 						times = ver
 				$"../../TileMap".make_bussy(self.global_position, false)
 				push(pushing, times)
+			myturn = false
 			emit_signal("done")
 func hit(damage, knockback = Vector2.ZERO, times = 1, parent = null):
 	if not parent == null:
@@ -193,7 +189,15 @@ func hit(damage, knockback = Vector2.ZERO, times = 1, parent = null):
 		$AudioStreamPlayer2D4.play()
 		yield($AudioStreamPlayer2D4, "finished")
 		$"../../TileMap".make_bussy(self.global_position, false)
+		if self.is_in_group("player"):
+			self.remove_from_group("player")
+		if self.is_in_group("enemy"):
+			self.remove_from_group("enemy")
 		queue_free()
 		if myturn == true:
+			myturn = false
 			emit_signal("done")
-			emit_signal("notmy")
+func _on_swordman_input_event(_viewport, event, _shape_idx):
+	if myturn == true:
+		if event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_LEFT:
+			$inputhandler.handle(hor, ver)

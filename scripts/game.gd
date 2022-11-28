@@ -11,3 +11,5 @@ func _ready():
 	yield(t, "timeout")
 	t.queue_free()
 	emit_signal("start")
+func game_over():
+	var _reload =  get_tree().reload_current_scene()

@@ -11,8 +11,6 @@ var chase = 0
 signal kill
 signal done
 signal knockbackdone
-signal my_turn
-signal notmy
 
 var myturn = false
 var chase_after = null
@@ -26,8 +24,6 @@ export var enemy : bool
 export var health : int
 func _ready():
 	$"../../TileMap".make_bussy(self.global_position, true)
-	var _connect = self.connect("my_turn", $Archer, "myturn")
-	var _connects = self.connect("notmy", $Archer, "notmy")
 	if enemy:
 		add_to_group("enemy")
 		$Archer.visible = false
@@ -98,11 +94,8 @@ func moveclick(pos):
 			times = - times
 	push(-move, times)
 	emit_signal("kill")
-	emit_signal("notmy")
+	myturn = false
 	emit_signal("done")
-func _on_Archer_click():
-	$archerhandler.handle(hor_arrow, ver_arrow)
-	$inputhandler.handle(hor, ver)
 func get_ver():
 	return ver
 func get_hor():
@@ -135,12 +128,11 @@ func attackclick(pos):
 		side =  Vector2(0,-16)
 		arrower.rotation_degrees = -90
 	arrower.start(side)
-	emit_signal("notmy")
+	myturn = false
 	emit_signal("done")
 func turn():
 	if enemy != true:
 		myturn = true
-		emit_signal("my_turn")
 	else:
 		var colliding = $attackcontrol.getcol()
 		var t = Timer.new()
@@ -152,6 +144,7 @@ func turn():
 		t.queue_free()
 		if colliding != Vector2.ZERO:
 			attackclick(colliding)
+			myturn = false
 			emit_signal("done")
 		elif is_chasing == true and is_instance_valid(chase_after):
 			if not chase_after == null:
@@ -177,6 +170,7 @@ func turn():
 			if chase >= 5:
 				is_chasing = false
 				chase = 0
+			myturn = false
 			emit_signal("done")
 		else:
 			var path = $path.getnext()
@@ -197,6 +191,7 @@ func turn():
 						times = - times
 				$"../../TileMap".make_bussy(self.global_position, false)
 				push(pushing, times)
+			myturn = false
 			emit_signal("done")
 func hit(damage, knockback = Vector2.ZERO, times = 1, parent = null):
 	if not parent == null:
@@ -213,6 +208,15 @@ func hit(damage, knockback = Vector2.ZERO, times = 1, parent = null):
 		yield($AudioStreamPlayer2D4, "finished")
 		$"../../TileMap".make_bussy(self.global_position, false)
 		queue_free()
+		if self.is_in_group("player"):
+			self.remove_from_group("player")
+		if self.is_in_group("enemy"):
+			self.remove_from_group("enemy")
 		if myturn == true:
+			myturn = false
 			emit_signal("done")
-			emit_signal("notmy")
+func _on_archer_input_event(_viewport, event, _shape_idx):
+	if myturn == true:
+		if event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_LEFT:
+			$archerhandler.handle(hor_arrow, ver_arrow)
+			$inputhandler.handle(hor, ver)

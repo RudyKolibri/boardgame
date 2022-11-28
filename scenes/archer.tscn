@@ -1,9 +1,8 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://assets/archertest.png" type="Texture" id=1]
 [ext_resource path="res://scripts/movearcher.gd" type="Script" id=2]
 [ext_resource path="res://scenes/inputhandler.tscn" type="PackedScene" id=3]
-[ext_resource path="res://scripts/Archer.gd" type="Script" id=4]
 [ext_resource path="res://scenes/arrow.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scenes/archerhandler.tscn" type="PackedScene" id=6]
 [ext_resource path="res://sounds/walk.mp3" type="AudioStream" id=7]
@@ -73,6 +72,7 @@ tracks/1/keys = {
 [node name="archer" type="KinematicBody2D" groups=["archer", "body"]]
 collision_layer = 259
 collision_mask = 263
+input_pickable = true
 script = ExtResource( 2 )
 arrow = ExtResource( 5 )
 health = 3
@@ -80,7 +80,6 @@ health = 3
 [node name="Archer" type="Sprite" parent="."]
 position = Vector2( 8, 8 )
 texture = ExtResource( 1 )
-script = ExtResource( 4 )
 
 [node name="evelarcher" type="Sprite" parent="."]
 position = Vector2( 8, 8 )
@@ -123,5 +122,6 @@ enabled = true
 collision_mask = 7
 collide_with_areas = true
 
+[connection signal="input_event" from="." to="." method="_on_archer_input_event"]
 [connection signal="kill" from="." to="inputhandler" method="_on_archer_kill"]
-[connection signal="click" from="Archer" to="." method="_on_Archer_click"]
+[connection signal="kill" from="." to="archerhandler" method="_on_archer_kill"]

@@ -1,8 +1,7 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://assets/swormantest.png" type="Texture" id=1]
 [ext_resource path="res://scripts/swordman.gd" type="Script" id=2]
-[ext_resource path="res://scripts/swordmansprite.gd" type="Script" id=3]
 [ext_resource path="res://scenes/inputhandler.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/attack.tscn" type="PackedScene" id=5]
 [ext_resource path="res://sounds/walk.mp3" type="AudioStream" id=6]
@@ -73,6 +72,7 @@ tracks/1/keys = {
 [node name="swordman" type="KinematicBody2D" groups=["body"]]
 collision_layer = 259
 collision_mask = 263
+input_pickable = true
 script = ExtResource( 2 )
 health = 4
 attack = ExtResource( 5 )
@@ -80,7 +80,6 @@ attack = ExtResource( 5 )
 [node name="Swordman" type="Sprite" parent="."]
 position = Vector2( 8, 8 )
 texture = ExtResource( 1 )
-script = ExtResource( 3 )
 
 [node name="evelswordman" type="Sprite" parent="."]
 position = Vector2( 8, 8 )
@@ -118,5 +117,5 @@ position = Vector2( 8, 8 )
 enabled = true
 collision_mask = 7
 
+[connection signal="input_event" from="." to="." method="_on_swordman_input_event"]
 [connection signal="kill" from="." to="inputhandler" method="_on_swordman_kill"]
-[connection signal="click" from="Swordman" to="." method="_on_Swordman_click"]

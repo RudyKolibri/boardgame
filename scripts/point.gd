@@ -1,10 +1,14 @@
-extends Node2D
+extends KinematicBody2D
 var hit = true
 var check = false
 var attack = false
+signal attack
+signal click
 var toggle_attacks = false
 func _ready():
 	#$AnimationPlayer.play("start")
+	var _connect = connect("attack", $"..", "attackclick")
+	var _connect2 = connect("click", $"..", "moveclick")
 	set_as_toplevel(true)
 func _on_checkenemy_body_entered(body):
 	if toggle_attacks == false and body != $"..":
@@ -33,4 +37,13 @@ func _on_checktilemap_body_entered(body):
 		$Sprite.visible = false
 		attack = true
 	if attack == false and body == $"../../../TileMap":
+		queue_free()
+
+
+func _on_point_input_event(_viewport, event, _shape_idx):
+	if event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_LEFT:
+		if attack == true:
+			emit_signal("attack", self.global_position)
+		else:
+			emit_signal("click", self.global_position)
 		queue_free()
