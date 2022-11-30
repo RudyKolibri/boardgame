@@ -9,22 +9,22 @@ script = ExtResource( 1 )
 position = Vector2( 0, 8 )
 enabled = true
 cast_to = Vector2( 64, 0 )
-collision_mask = 2
+collision_mask = 256
 
 [node name="RayCast2D2" type="RayCast2D" parent="."]
 position = Vector2( 8, 0 )
 enabled = true
 cast_to = Vector2( 0, 64 )
-collision_mask = 2
+collision_mask = 256
 
 [node name="RayCast2D3" type="RayCast2D" parent="."]
 position = Vector2( 16, 8 )
 enabled = true
 cast_to = Vector2( -64, 0 )
-collision_mask = 2
+collision_mask = 256
 
 [node name="RayCast2D4" type="RayCast2D" parent="."]
 position = Vector2( 8, 16 )
 enabled = true
 cast_to = Vector2( 0, -64 )
-collision_mask = 2
+collision_mask = 256

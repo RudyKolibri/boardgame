@@ -93,9 +93,11 @@ shape = SubResource( 1 )
 [node name="Tween" type="Tween" parent="."]
 
 [node name="inputhandler" parent="." instance=ExtResource( 3 )]
+visible = false
 position = Vector2( 8, 8 )
 
 [node name="archerhandler" parent="." instance=ExtResource( 6 )]
+visible = false
 position = Vector2( 8, 8 )
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]

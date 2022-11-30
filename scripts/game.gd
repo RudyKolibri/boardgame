@@ -1,5 +1,6 @@
 extends Node2D
 signal start
+export(String, FILE) var next_level : String = ""
 func _ready():
 	$AudioStreamPlayer2D.play()
 	$turnbased.play_turn()
@@ -13,3 +14,5 @@ func _ready():
 	emit_signal("start")
 func game_over():
 	var _reload =  get_tree().reload_current_scene()
+func game_won():
+	get_tree().change_scene(next_level)

@@ -19,7 +19,6 @@ func play_turn():
 	t.queue_free()
 	player.clear()
 	enemy.clear()
-	print(get_child_count())
 	for child in get_child_count():
 		var childrn = get_child(child)
 		if childrn.is_in_group("enemy"):
@@ -28,6 +27,8 @@ func play_turn():
 			player.append(childrn)
 	if player.size() <= 0:
 		$"..".game_over()
+	if enemy.size() <= 0:
+		$"..".game_won()
 	if is_instance_valid(active_character):
 		self.offset = active_character.position + normalofset
 		active_character.turn()

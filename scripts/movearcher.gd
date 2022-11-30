@@ -105,10 +105,14 @@ func get_ver_arrow():
 func get_hor_arrow():
 	return hor_arrow
 func attackclick(pos):
-	pos += Vector2(-4,-4)
 	$AudioStreamPlayer2D2.playing = true
 	emit_signal("kill")
-	var get_side = self.global_position - pos
+	var get_side = pos - self.global_position
+	print(get_side)
+	if get_side.x != 0 and get_side.y != 0:
+		print("in")
+		get_side += Vector2(-4, -4)
+		print(get_side)
 	var side = Vector2()
 	var arrower = arrow.instance() as Node2D
 	add_child(arrower)
@@ -116,16 +120,16 @@ func attackclick(pos):
 	arrower.position.x += 8
 	arrower.position.y += 8
 	if get_side.x < 0:
-		side = Vector2(16,0)
-		arrower.rotation_degrees = 0
-	if get_side.x > 0:
-		side =  Vector2(-16,0)
+		side = Vector2(-16,0)
 		arrower.rotation_degrees = 180
+	if get_side.x > 0:
+		side =  Vector2(16,0)
+		arrower.rotation_degrees = 0
 	if get_side.y < 0:
-		side =  Vector2(0,16)
+		side =  Vector2(0,-16)
 		arrower.rotation_degrees = 90
 	if get_side.y > 0:
-		side =  Vector2(0,-16)
+		side =  Vector2(0,16)
 		arrower.rotation_degrees = -90
 	arrower.start(side)
 	myturn = false
@@ -143,6 +147,7 @@ func turn():
 		yield(t, "timeout")
 		t.queue_free()
 		if colliding != Vector2.ZERO:
+			print(colliding - self.global_position)
 			attackclick(colliding)
 			myturn = false
 			emit_signal("done")

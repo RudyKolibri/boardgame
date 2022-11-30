@@ -93,6 +93,7 @@ shape = SubResource( 1 )
 [node name="Tween" type="Tween" parent="."]
 
 [node name="inputhandler" parent="." instance=ExtResource( 4 )]
+visible = false
 position = Vector2( 8, 8 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -113,6 +114,7 @@ stream = ExtResource( 10 )
 volume_db = 10.0
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
+visible = false
 position = Vector2( 8, 8 )
 enabled = true
 collision_mask = 7

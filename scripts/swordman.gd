@@ -78,7 +78,6 @@ func can_move(move_to: Vector2) -> bool:
 	future_transform.origin = move_to
 	return not test_move(future_transform, Vector2())
 func moveclick(pos):
-	print(pos)
 	pos += Vector2(-4,-4)
 	$"../../TileMap".make_bussy(self.global_position, false)
 	$AnimationPlayer.play("move")
