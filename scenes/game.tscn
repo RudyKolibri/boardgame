@@ -62,24 +62,28 @@ stream = ExtResource( 9 )
 volume_db = 5.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( -8, -20 )
 offset = Vector2( 32, 32 )
 current = true
 script = ExtResource( 4 )
 
-[node name="Label" type="Label" parent="Camera2D"]
+[node name="Control" type="Control" parent="Camera2D"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Label" type="Label" parent="Camera2D/Control"]
 visible = false
 modulate = Color( 0, 0, 0, 1 )
-margin_right = 39.0
-margin_bottom = 14.0
+margin_top = 25.0
+margin_right = 64.0
+margin_bottom = 39.0
 text = "50 fps"
 script = ExtResource( 5 )
 
-[node name="turnsleft" type="Label" parent="Camera2D"]
+[node name="turnsleft" type="Label" parent="Camera2D/Control"]
 modulate = Color( 0, 0, 0, 1 )
 self_modulate = Color( 0, 0, 0, 1 )
 margin_right = 64.0
-margin_bottom = 64.0
+margin_bottom = 20.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/font_outline_modulate = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 1, 1, 1, 1 )

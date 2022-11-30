@@ -24,4 +24,4 @@ func zoom(zooming) -> void:
 	tween.tween_property(self, "zoom:x", zoom, 1)
 	tween.tween_property(self, "zoom:y", zoom, 1)
 func update_turns(turn):
-	$turnsleft.text = str(turn)
+	$Control/turnsleft.text = str(turn)

@@ -200,3 +200,8 @@ func _on_swordman_input_event(_viewport, event, _shape_idx):
 	if myturn == true:
 		if event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_LEFT:
 			$inputhandler.handle(hor, ver)
+func skipclick():
+	emit_signal("kill")
+	emit_signal("done")
+	myturn = false
+	

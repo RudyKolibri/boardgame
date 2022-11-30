@@ -46,6 +46,10 @@ func handle(x, y):
 		var collision_point = $down.get_collision_point()
 		var distance = origin.distance_to(collision_point)
 		beneden = round(distance / 16)
+	var pointers = point.instance() as Node2D
+	get_parent().add_child(pointers)
+	pointers.global_position = self.global_position + Vector2(-4, -4)
+	var _connects = connect("kill", pointers, "kill")
 	for i in recht :
 			self.position = self.position + right
 			var pointer = point.instance() as Node2D

@@ -225,3 +225,7 @@ func _on_archer_input_event(_viewport, event, _shape_idx):
 		if event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_LEFT:
 			$archerhandler.handle(hor_arrow, ver_arrow)
 			$inputhandler.handle(hor, ver)
+func skipclick():
+	emit_signal("kill")
+	emit_signal("done")
+	myturn = false

@@ -66,4 +66,8 @@ position = Vector2( 16, 16 )
 [node name="Camera2D" parent="levelbuilder" index="8"]
 position = Vector2( 60, 32 )
 
+[node name="turnsleft" parent="levelbuilder/Camera2D/MarginContainer" index="1"]
+margin_top = 22.0
+margin_bottom = 42.0
+
 [editable path="levelbuilder"]
