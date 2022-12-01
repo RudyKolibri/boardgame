@@ -16,7 +16,7 @@ func _ready():
 	$links.cast_to = left * hor
 	$up.cast_to = up * ver
 	$down.cast_to = down * ver
-func handle(x, y):
+func handle(x, y, attacks = 0):
 	var recht = x
 	var links = x
 	var omhoog = y
@@ -30,22 +30,22 @@ func handle(x, y):
 		var origin = $recht.global_transform.origin
 		var collision_point = $recht.get_collision_point()
 		var distance = origin.distance_to(collision_point)
-		recht = round(distance / 16)
+		recht = round(distance / 16) - attacks
 	if $links.is_colliding():   
 		var origin = $links.global_transform.origin
 		var collision_point = $links.get_collision_point()
 		var distance = origin.distance_to(collision_point)
-		links = round(distance / 16)
+		links = round(distance / 16)- attacks
 	if $up.is_colliding():   
 		var origin = $up.global_transform.origin
 		var collision_point = $up.get_collision_point()
 		var distance = origin.distance_to(collision_point)
-		omhoog = round(distance / 16)
+		omhoog = round(distance / 16)- attacks
 	if $down.is_colliding():   
 		var origin = $down.global_transform.origin
 		var collision_point = $down.get_collision_point()
 		var distance = origin.distance_to(collision_point)
-		beneden = round(distance / 16)
+		beneden = round(distance / 16)- attacks
 	var pointers = point.instance() as Node2D
 	get_parent().add_child(pointers)
 	pointers.global_position = self.global_position + Vector2(-4, -4)
@@ -82,5 +82,5 @@ func _on_swordman_kill():
 	emit_signal("kill")
 func _on_archer_kill():
 	emit_signal("kill")
-
-
+func _on_horseman_kill():
+	emit_signal("kill")

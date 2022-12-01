@@ -15,4 +15,4 @@ func _ready():
 func game_over():
 	var _reload =  get_tree().reload_current_scene()
 func game_won():
-	get_tree().change_scene(next_level)
+	var _scene = get_tree().change_scene(next_level)
