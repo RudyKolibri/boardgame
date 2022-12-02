@@ -79,18 +79,22 @@ func can_move(move_to: Vector2) -> bool:
 func moveclick(pos):
 	pos += Vector2(-4,-4)
 	$"../../TileMap".make_bussy(self.global_position, false)
-	$AnimationPlayer.play("move")
-	$AudioStreamPlayer2D.playing = true
 	var times = 0
 	var move = self.global_position - pos
+	if move == Vector2(4,4):
+		move = Vector2(0,0)
+	else:
+		$AnimationPlayer.play("move")
+		$AudioStreamPlayer2D.playing = true
 	if (move.x) != 0:
 		times = move.x / 16
-		if move.x < 0:
+		if move.x > 0:
 			$links/CollisionShape2D.disabled = false
+		if move.x < 0:
 			$rechts/CollisionShape2D.disabled = false
 		if times < 0:
 			times = - times
-	if (move.y) != 0:
+	elif (move.y) != 0:
 		times = move.y / 16
 		if move.y > 0:
 			$omhoog/CollisionShape2D.disabled = false
@@ -103,6 +107,7 @@ func moveclick(pos):
 		$omhoog/CollisionShape2D.disabled = false
 		$links/CollisionShape2D.disabled = false
 		$rechts/CollisionShape2D.disabled = false
+		$AnimationPlayer.play("attack")
 	push(-move, times)
 	emit_signal("kill")
 	myturn = false
@@ -203,6 +208,7 @@ func hit(damages, knockback = Vector2.ZERO, times = 1, parent = null):
 			emit_signal("done")
 func skipclick():
 	myturn = false
+	print("skipclick")
 	moveclick(self.global_position)
 func _on_horseman_input_event(_viewport, event,_shape_idx):
 	if myturn == true:

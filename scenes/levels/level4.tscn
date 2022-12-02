@@ -1,14 +1,19 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scenes/game.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/horseman.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/attackcontrol.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/path.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/swordman.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/Adventuro.ttf" type="DynamicFontData" id=6]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 6 )
 
 [node name="level4" type="Node2D"]
 
 [node name="levelbuilder" parent="." instance=ExtResource( 1 )]
+next_level = "res://scenes/levels/level4.tscn"
 
 [node name="TileMap" parent="levelbuilder" index="3"]
 tile_data = PoolIntArray( 0, 0, 4, 1, 0, 4, 2, 0, 4, 3, 0, 4, 65536, 0, 4, 65537, 0, 4, 65538, 0, 4, 65539, 0, 4, 65540, 0, 4, 131072, 0, 4, 131073, 0, 4, 131074, 0, 4, 131075, 0, 4, 131076, 0, 4, 196608, 0, 4, 196609, 0, 4, 196610, 0, 4, 196611, 0, 4, 196612, 0, 4, 196613, 0, 4, 262144, 0, 4, 262145, 0, 4, 262146, 0, 4, 262147, 0, 4, 262148, 0, 4, 327680, 0, 4, 327681, 0, 4, 327682, 0, 4 )
@@ -27,7 +32,14 @@ enemy = true
 [node name="path" parent="levelbuilder/turnbased/swordman" instance=ExtResource( 4 )]
 
 [node name="Node2D" type="Node2D" parent="levelbuilder/turnbased/swordman/path"]
+position = Vector2( 32, 0 )
 
 [node name="Node2D2" type="Node2D" parent="levelbuilder/turnbased/swordman/path"]
+
+[node name="Label" parent="levelbuilder/Camera2D/Control" index="0"]
+visible = true
+margin_top = 44.0
+margin_bottom = 64.0
+custom_fonts/font = SubResource( 1 )
 
 [editable path="levelbuilder"]

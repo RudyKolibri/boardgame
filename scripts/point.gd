@@ -50,9 +50,9 @@ func _on_point_input_event(_viewport, event, _shape_idx):
 			emit_signal("attack", self.global_position)
 			
 		elif skip == true:
+			emit_signal("skip")
 			$AudioStreamPlayer2D.playing = true
 			yield($AudioStreamPlayer2D, "finished")
-			emit_signal("skip")
 			
 		else:
 			$AudioStreamPlayer2D.playing = true
