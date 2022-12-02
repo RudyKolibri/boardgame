@@ -90,16 +90,20 @@ func moveclick(pos):
 		times = move.x / 16
 		if move.x > 0:
 			$links/CollisionShape2D.disabled = false
+			$dust/dustplayer.play("links")
 		if move.x < 0:
 			$rechts/CollisionShape2D.disabled = false
+			$dust/dustplayer.play("rechts")
 		if times < 0:
 			times = - times
 	elif (move.y) != 0:
 		times = move.y / 16
 		if move.y > 0:
 			$omhoog/CollisionShape2D.disabled = false
+			$dust/dustplayer.play("up")
 		elif move.y < 0:
 			$beneden/CollisionShape2D.disabled = false
+			$dust/dustplayer.play("down")
 		if times < 0:
 			times = - times
 	else:
@@ -107,6 +111,7 @@ func moveclick(pos):
 		$omhoog/CollisionShape2D.disabled = false
 		$links/CollisionShape2D.disabled = false
 		$rechts/CollisionShape2D.disabled = false
+		$dust/dustplayer.play("all")
 		$AnimationPlayer.play("attack")
 	push(-move, times)
 	emit_signal("kill")
@@ -125,6 +130,7 @@ func turn():
 	if enemy != true:
 		myturn = true
 	else:
+		var minus = 0
 		var colliding = $attackcontrol.getcol()
 		var t = Timer.new()
 		t.set_wait_time(0.35)
@@ -134,7 +140,30 @@ func turn():
 		yield(t, "timeout")
 		t.queue_free()
 		if colliding != Vector2.ZERO:
-			#attackclick(colliding)
+			minus = 1
+		var to_tiles = self.global_position - colliding
+		var times_x = round(to_tiles.x / 16)
+		var times_y = round(to_tiles.y / 16)
+		var timess
+		if times_x < 0:
+			times_x = - times_x
+		if times_y < 0:
+			times_y = - times_y
+		if times_x > 0:
+			timess = times_x - 1
+		if times_y > 0:
+			timess = times_y - 1
+		if timess == 0 and minus != 0:
+			$beneden/CollisionShape2D.disabled = false
+			$omhoog/CollisionShape2D.disabled = false
+			$links/CollisionShape2D.disabled = false
+			$rechts/CollisionShape2D.disabled = false
+			$dust/dustplayer.play("all")
+			yield($dust/dustplayer, "animation_finished")
+			$omhoog/CollisionShape2D.disabled = true
+			$beneden/CollisionShape2D.disabled = true
+			$links/CollisionShape2D.disabled = true
+			$rechts/CollisionShape2D.disabled = true
 			myturn = false
 			emit_signal("done")
 		elif is_chasing == true and is_instance_valid(chase_after):
@@ -145,16 +174,29 @@ func turn():
 					var pushing = (path * 16) - self.global_position
 					if pushing.x / 16 > 0 or pushing.x / 16 < 0:
 						times = pushing.x / 16
+						if pushing.x < 0:
+							$links/CollisionShape2D.disabled = false
+							$dust/dustplayer.play("links")
+						if pushing.x > 0:
+							$rechts/CollisionShape2D.disabled = false
+							$dust/dustplayer.play("rechts")
 						if times > hor:
 							times = hor
 						if times < 0:
 							times = - times
 					if pushing.y / 16 > 0 or pushing.y / 16 < 0:
 						times = pushing.y / 16
+						if pushing.y < 0:
+							$omhoog/CollisionShape2D.disabled = false
+							$dust/dustplayer.play("up")
+						if pushing.y > 0:
+							$omlaag/CollisionShape2D.disabled = false
+							$dust/dustplayer.play("down")
 						if times > ver:
 							times = ver
 						if times < 0:
 							times = - times
+					times -= minus
 					$"../../TileMap".make_bussy(self.global_position, false)
 					push(pushing, times)
 			chase += 1
@@ -170,20 +212,38 @@ func turn():
 				var pushing = (path * 16) - self.global_position
 				if pushing.x / 16 > 0 or pushing.x / 16 < 0:
 					times = pushing.x / 16
+					if pushing.x < 0:
+						$links/CollisionShape2D.disabled = false
+						$dust/dustplayer.play("links")
+					if pushing.x > 0:
+						$rechts/CollisionShape2D.disabled = false
+						$dust/dustplayer.play("rechts")
 					if times < 0:
 						times = - times
 					if times > hor:
 						times = hor
 				if pushing.y / 16 > 0 or pushing.y / 16 < 0:
 					times = pushing.y / 16
+					if pushing.y < 0:
+						$omhoog/CollisionShape2D.disabled = false
+						$dust/dustplayer.play("up")
+					if pushing.y > 0:
+						$beneden/CollisionShape2D.disabled = false
+						$dust/dustplayer.play("down")
 					if times < 0:
 						times = - times
 					if times > ver:
 						times = ver
+				times -= minus
 				$"../../TileMap".make_bussy(self.global_position, false)
 				push(pushing, times)
 			myturn = false
 			emit_signal("done")
+		yield($dust/dustplayer, "animation_finished")
+		$omhoog/CollisionShape2D.disabled = true
+		$beneden/CollisionShape2D.disabled = true
+		$links/CollisionShape2D.disabled = true
+		$rechts/CollisionShape2D.disabled = true
 func hit(damages, knockback = Vector2.ZERO, times = 1, parent = null):
 	if not parent == null:
 		chase_after = parent
@@ -208,7 +268,6 @@ func hit(damages, knockback = Vector2.ZERO, times = 1, parent = null):
 			emit_signal("done")
 func skipclick():
 	myturn = false
-	print("skipclick")
 	moveclick(self.global_position)
 func _on_horseman_input_event(_viewport, event,_shape_idx):
 	if myturn == true:

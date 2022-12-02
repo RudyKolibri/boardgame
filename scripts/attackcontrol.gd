@@ -6,7 +6,7 @@ func _ready():
 	$RayCast2D4.add_exception($"..")
 func getcol():
 	self.global_position = $"..".global_position
-	if $RayCast2D.is_colliding():
+	if $RayCast2D.is_colliding() and $RayCast2D.get_collider().is_in_group("tilemap") == false:
 		if $RayCast2D.get_collider().is_in_group("enemy") == false and $RayCast2D.get_collider().is_in_group("body"):
 			var origin = $RayCast2D.global_transform.origin
 			var collision_point = $RayCast2D.get_collision_point()
@@ -17,7 +17,7 @@ func getcol():
 			var glob = self.global_position
 			self.global_position = $"..".global_position
 			return glob
-	if $RayCast2D2.is_colliding():
+	if $RayCast2D2.is_colliding() and $RayCast2D2.get_collider().is_in_group("tilemap") == false:
 		if $RayCast2D2.get_collider().is_in_group("enemy") == false and $RayCast2D2.get_collider().is_in_group("body"):
 			var origin = $RayCast2D2.global_transform.origin
 			var collision_point = $RayCast2D2.get_collision_point()
@@ -28,7 +28,7 @@ func getcol():
 			var glob = self.global_position
 			self.global_position = $"..".global_position
 			return glob
-	if $RayCast2D3.is_colliding():
+	if $RayCast2D3.is_colliding() and $RayCast2D3.get_collider().is_in_group("tilemap") == false:
 		if $RayCast2D3.get_collider().is_in_group("enemy") == false and $RayCast2D3.get_collider().is_in_group("body"):
 			var origin = $RayCast2D3.global_transform.origin
 			var collision_point = $RayCast2D3.get_collision_point()
@@ -39,8 +39,7 @@ func getcol():
 			var glob = self.global_position
 			self.global_position = $"..".global_position
 			return glob
-	if $RayCast2D4.is_colliding():
-		print($RayCast2D4.get_collider())
+	if $RayCast2D4.is_colliding() and $RayCast2D4.get_collider().is_in_group("tilemap") == false:
 		if $RayCast2D4.get_collider().is_in_group("enemy") == false and $RayCast2D4.get_collider().is_in_group("body"):
 			var origin = $RayCast2D4.global_transform.origin
 			var collision_point = $RayCast2D4.get_collision_point()

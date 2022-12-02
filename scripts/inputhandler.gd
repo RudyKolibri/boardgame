@@ -22,10 +22,10 @@ func handle(x, y, attacks = 0):
 	var omhoog = y
 	var beneden = y
 	var pos = self.position
-	$recht.cast_to = right * x
-	$links.cast_to = left * x
-	$up.cast_to = up * x
-	$down.cast_to = down * x
+	$recht.cast_to = right * (x - attacks)
+	$links.cast_to = left * (x - attacks)
+	$up.cast_to = up * (x - attacks)
+	$down.cast_to = down * (x - attacks)
 	if $recht.is_colliding():   
 		var origin = $recht.global_transform.origin
 		var collision_point = $recht.get_collision_point()
@@ -35,17 +35,17 @@ func handle(x, y, attacks = 0):
 		var origin = $links.global_transform.origin
 		var collision_point = $links.get_collision_point()
 		var distance = origin.distance_to(collision_point)
-		links = round(distance / 16)- attacks
+		links = round(distance / 16) - attacks
 	if $up.is_colliding():   
 		var origin = $up.global_transform.origin
 		var collision_point = $up.get_collision_point()
 		var distance = origin.distance_to(collision_point)
-		omhoog = round(distance / 16)- attacks
+		omhoog = round(distance / 16) - attacks
 	if $down.is_colliding():   
 		var origin = $down.global_transform.origin
 		var collision_point = $down.get_collision_point()
 		var distance = origin.distance_to(collision_point)
-		beneden = round(distance / 16)- attacks
+		beneden = round(distance / 16) - attacks
 	var pointers = point.instance() as Node2D
 	get_parent().add_child(pointers)
 	pointers.global_position = self.global_position + Vector2(-4, -4)

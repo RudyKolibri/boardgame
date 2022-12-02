@@ -4,29 +4,34 @@
 [ext_resource path="res://scenes/point.tscn" type="PackedScene" id=2]
 
 [node name="inputhandler" type="Node2D"]
+visible = false
 script = ExtResource( 1 )
 point = ExtResource( 2 )
 
 [node name="recht" type="RayCast2D" parent="."]
+visible = false
 position = Vector2( -3, 0 )
 enabled = true
 cast_to = Vector2( 0, 0 )
-collision_mask = 6
+collision_mask = 7
 
 [node name="links" type="RayCast2D" parent="."]
+visible = false
 position = Vector2( 3, 0 )
 enabled = true
 cast_to = Vector2( 0, 0 )
-collision_mask = 6
+collision_mask = 7
 
 [node name="up" type="RayCast2D" parent="."]
+visible = false
 position = Vector2( 0, 3 )
 enabled = true
 cast_to = Vector2( 0, 0 )
-collision_mask = 6
+collision_mask = 7
 
 [node name="down" type="RayCast2D" parent="."]
+visible = false
 position = Vector2( 0, -3 )
 enabled = true
 cast_to = Vector2( 0, 0 )
-collision_mask = 6
+collision_mask = 7
