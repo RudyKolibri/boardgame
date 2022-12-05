@@ -1,0 +1,55 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://scenes/game.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/path.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/attackcontrol.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/swordman.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/Dialog.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/levels/levelscripts/turtorial level2.gd" type="Script" id=6]
+
+[node name="turtorial level2" type="Node2D"]
+script = ExtResource( 6 )
+
+[node name="levelbuilder" parent="." instance=ExtResource( 1 )]
+next_level = "res://scenes/levels/level1.tscn"
+
+[node name="underwaterground" parent="levelbuilder" index="0"]
+tile_data = PoolIntArray( 1, 4, 65540, 2, 4, 65540, 3, 4, 65540, 4, 4, 65540, 5, 4, 65540, 65537, 4, 65540, 65541, 4, 65540, 65542, 4, 65540, 65543, 4, 65540, 65544, 4, 65540, 65545, 4, 65540, 131073, 4, 65540, 131074, 4, 65540, 131075, 4, 65540, 131080, 4, 65540, 131081, 4, 65540, 131082, 4, 65540, 196610, 4, 65540, 196611, 4, 65540, 196613, 4, 4, 196614, 4, 4, 196618, 4, 65540, 262147, 4, 65540, 262150, 4, 4, 262151, 4, 4, 262154, 4, 65540, 327683, 4, 65540, 327684, 4, 65540, 327689, 4, 65540, 327690, 4, 65540, 393220, 4, 65540, 393221, 4, 65540, 393222, 4, 65540, 393223, 4, 65540, 393224, 4, 65540, 393225, 4, 65540 )
+
+[node name="water" parent="levelbuilder" index="1"]
+tile_data = PoolIntArray( -65537, 1, 2, -131072, 1, 3, -131071, 1, 3, -131070, 1, 3, -131069, 1, 3, -131068, 1, 3, -131067, 1, 3, -131066, 1, 3, -131065, 1, 3, -131064, 1, 3, -131063, 1, 3, -131062, 1, 3, -131061, 1, 3, -131060, 1, 4, -1, 1, 65538, -65536, 1, 65539, -65535, 1, 65539, -65534, 1, 65539, -65533, 1, 65539, -65532, 1, 65539, -65531, 1, 65539, -65530, 1, 65539, -65529, 1, 65539, -65528, 1, 65539, -65527, 1, 65539, -65526, 1, 65539, -65525, 1, 65539, -65524, 1, 65540, 65535, 1, 65538, 0, 1, 65539, 1, 1, 65536, 2, 1, 131075, 3, 1, 131075, 4, 1, 131075, 5, 1, 65537, 6, 1, 65539, 7, 1, 65539, 8, 1, 65539, 9, 1, 65539, 10, 1, 65539, 11, 1, 65539, 12, 1, 65540, 131071, 1, 65538, 65536, 1, 65539, 65537, 1, 65540, 65541, 1, 131074, 65542, 1, 131075, 65543, 1, 131075, 65544, 1, 131075, 65545, 1, 65537, 65546, 1, 65539, 65547, 1, 65539, 65548, 1, 65540, 196607, 1, 65538, 131072, 1, 65539, 131073, 1, 131072, 131074, 1, 4, 131081, 1, 131074, 131082, 1, 65537, 131083, 1, 65539, 131084, 1, 65540, 262143, 1, 65538, 196608, 1, 65539, 196609, 1, 65539, 196610, 1, 131072, 196611, 1, 4, 196618, 1, 65538, 196619, 1, 65539, 196620, 1, 65540, 327679, 1, 65538, 262144, 1, 65539, 262145, 1, 65539, 262146, 1, 65539, 262147, 1, 65540, 262154, 1, 65538, 262155, 1, 65539, 262156, 1, 65540, 393215, 1, 65538, 327680, 1, 65539, 327681, 1, 65539, 327682, 1, 65539, 327683, 1, 131072, 327684, 1, 4, 327689, 1, 2, 327690, 1, 131073, 327691, 1, 65539, 327692, 1, 65540, 458751, 1, 65538, 393216, 1, 65539, 393217, 1, 65539, 393218, 1, 65539, 393219, 1, 65539, 393220, 1, 131072, 393221, 1, 3, 393222, 1, 3, 393223, 1, 3, 393224, 1, 3, 393225, 1, 131073, 393226, 1, 65539, 393227, 1, 65539, 393228, 1, 65540, 524287, 1, 65538, 458752, 1, 65539, 458753, 1, 65539, 458754, 1, 65539, 458755, 1, 65539, 458756, 1, 65539, 458757, 1, 65539, 458758, 1, 65539, 458759, 1, 65539, 458760, 1, 65539, 458761, 1, 65539, 458762, 1, 65539, 458763, 1, 65539, 458764, 1, 65540, 589823, 1, 131074, 524288, 1, 131075, 524289, 1, 131075, 524290, 1, 131075, 524291, 1, 131075, 524292, 1, 131075, 524293, 1, 131075, 524294, 1, 131075, 524295, 1, 131075, 524296, 1, 131075, 524297, 1, 131075, 524298, 1, 131075, 524299, 1, 131075, 524300, 1, 131076 )
+
+[node name="TileMap" parent="levelbuilder" index="3"]
+tile_data = PoolIntArray( 65538, 0, 65540, 65539, 0, 65540, 65540, 0, 65540, 131076, 0, 65540, 131077, 0, 131074, 131078, 0, 131074, 131079, 0, 65540, 196612, 0, 0, 196615, 0, 3, 196616, 0, 65540, 196617, 0, 65540, 262148, 0, 65540, 262149, 0, 65538, 262152, 0, 65537, 262153, 0, 65540, 327685, 0, 65540, 327686, 0, 196611, 327687, 0, 196611, 327688, 0, 65540 )
+
+[node name="probs" parent="levelbuilder" index="4"]
+tile_data = PoolIntArray( 65539, 5, 2, 131075, 5, 3, 131079, 5, 2, 131080, 5, 3, 196613, 5, 3, 196614, 5, 3, 196617, 5, 0, 262148, 5, 1, 262150, 5, 3, 262151, 5, 3, 327687, 5, 2 )
+
+[node name="turnbased" parent="levelbuilder" index="5"]
+left_turns = 5
+
+[node name="swordman" parent="levelbuilder/turnbased" index="0" instance=ExtResource( 4 )]
+position = Vector2( 32, 16 )
+
+[node name="swordman2" parent="levelbuilder/turnbased" index="1" instance=ExtResource( 4 )]
+position = Vector2( 80, 64 )
+enemy = true
+health = 2
+
+[node name="path" parent="levelbuilder/turnbased/swordman2" instance=ExtResource( 2 )]
+
+[node name="Node2D" type="Node2D" parent="levelbuilder/turnbased/swordman2/path"]
+
+[node name="Node2D2" type="Node2D" parent="levelbuilder/turnbased/swordman2/path"]
+position = Vector2( 0, 16 )
+
+[node name="attackcontrol" parent="levelbuilder/turnbased/swordman2" instance=ExtResource( 3 )]
+
+[node name="Camera2D" parent="levelbuilder" index="8"]
+position = Vector2( 64, 24 )
+zoom = Vector2( 2.5, 2.5 )
+
+[node name="Dialog" parent="." instance=ExtResource( 5 )]
+dialogue_file = "res://dialogs/tutoriallevel2.json"
+
+[editable path="levelbuilder"]

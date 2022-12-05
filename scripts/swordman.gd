@@ -5,17 +5,21 @@ var hor = 3
 var ver = 3
 var chase = 0 
 
+var l = Timer.new()
+var input = Vector2()
+
 signal done
 signal selfdone
 signal knockbackdone
 signal kill
 
-var input = Vector2()
+
 var myturn = false
 var chase_after = null
 var is_chasing = false
 var bodie
 var sliding : = false
+var is_point = false
 
 export var sliding_time : = 0.6
 export var enemy : bool
@@ -23,6 +27,7 @@ export var health : int
 export var attack : PackedScene
 
 func _ready():
+	self.add_child(l)
 	$"../../TileMap".make_bussy(self.global_position, true)
 	if enemy:
 		add_to_group("enemy")
@@ -112,7 +117,17 @@ func get_ver():
 func get_hor():
 	return hor
 func turn():
-	if enemy != true:
+	if health <= 0:
+		$AudioStreamPlayer2D4.play()
+		yield($AudioStreamPlayer2D4, "finished")
+		$"../../TileMap".make_bussy(self.global_position, false)
+		emit_signal("done")
+		if self.is_in_group("player"):
+			self.remove_from_group("player")
+		if self.is_in_group("enemy"):
+			self.remove_from_group("enemy")
+		queue_free()
+	elif enemy != true:
 		myturn = true
 	else:
 		var colliding = $attackcontrol.getcol()
@@ -192,16 +207,27 @@ func hit(damage, knockback = Vector2.ZERO, times = 1, parent = null):
 			self.remove_from_group("player")
 		if self.is_in_group("enemy"):
 			self.remove_from_group("enemy")
-		queue_free()
 		if myturn == true:
 			myturn = false
 			emit_signal("done")
-func _on_swordman_input_event(_viewport, event, _shape_idx):
-	if myturn == true:
-		if event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_LEFT:
-			$inputhandler.handle(hor, ver)
+		queue_free()
 func skipclick():
 	emit_signal("kill")
 	emit_signal("done")
 	myturn = false
-	
+func _on_swordman_mouse_entered():
+	if myturn == true and is_point == false:
+		$inputhandler.handle(hor, ver)
+		is_point = true
+	elif myturn == true and is_point == true:
+		emit_signal("kill")
+		$inputhandler.handle(hor, ver)
+		is_point = true
+func _on_swordman_mouse_exited():
+	if myturn == true:
+		l.set_wait_time(2)
+		l.set_one_shot(true)
+		l.start()
+		yield(l, "timeout")
+		emit_signal("kill")
+		is_point = false

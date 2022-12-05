@@ -1,7 +1,7 @@
 extends Sprite
 class_name turnbased
 var active_character
-var normalofset = Vector2(4, 4)
+var normalofset = Vector2(8, 8)
 export var left_turns : int
 var old_index
 var player = []
@@ -17,18 +17,6 @@ func play_turn():
 	t.start()
 	yield(t, "timeout")
 	t.queue_free()
-	player.clear()
-	enemy.clear()
-	for child in get_child_count():
-		var childrn = get_child(child)
-		if childrn.is_in_group("enemy"):
-			enemy.append(childrn)
-		elif childrn.is_in_group("player"):
-			player.append(childrn)
-	if player.size() <= 0:
-		$"..".game_over()
-	if enemy.size() <= 0:
-		$"..".game_won()
 	if is_instance_valid(active_character):
 		self.offset = active_character.position + normalofset
 		active_character.turn()
@@ -50,6 +38,8 @@ func play_turn():
 	else:
 		var new_index: int = (old_index + 1) % get_child_count()
 		active_character = get_child(new_index)
+		if not is_instance_valid(active_character):
+			play_turn()
 		self.offset = active_character.position + normalofset
 		active_character.turn()
 		yield(active_character, "done")
@@ -69,3 +59,16 @@ func play_turn():
 		play_turn()
 	if left_turns <= 0:
 		$"..".game_over()
+func _physics_process(_delta):
+	player.clear()
+	enemy.clear()
+	for child in get_child_count():
+		var childrn = get_child(child)
+		if childrn.is_in_group("enemy"):
+			enemy.append(childrn)
+		elif childrn.is_in_group("player"):
+			player.append(childrn)
+	if player.size() <= 0:
+		$"..".game_over()
+	if enemy.size() <= 0:
+		$"..".game_won()

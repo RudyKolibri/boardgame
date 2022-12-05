@@ -93,7 +93,6 @@ shape = SubResource( 1 )
 [node name="Tween" type="Tween" parent="."]
 
 [node name="inputhandler" parent="." instance=ExtResource( 4 )]
-visible = false
 position = Vector2( 8, 8 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -119,5 +118,6 @@ position = Vector2( 8, 8 )
 enabled = true
 collision_mask = 7
 
-[connection signal="input_event" from="." to="." method="_on_swordman_input_event"]
 [connection signal="kill" from="." to="inputhandler" method="_on_swordman_kill"]
+[connection signal="mouse_entered" from="." to="." method="_on_swordman_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_swordman_mouse_exited"]

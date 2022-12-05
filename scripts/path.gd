@@ -10,6 +10,16 @@ onready var used_cells = $"../../../TileMap".get_used_cells_by_id(0) + $"../../.
 onready var bussy_cell = []
 var positionspath = []
 func _ready():
+	var randomiser = []
+	var nonshuffle = []
+	for child in get_child_count():
+		randomiser.append(child)
+		nonshuffle.append(child)
+	randomize()
+	randomiser.shuffle()
+	for child in randomiser:
+		self.move_child(get_child(nonshuffle[0]), child)
+		nonshuffle.erase(0)
 	for point in get_child_count():
 		positionspath.append(get_child(point).global_position)
 	yield($"../../..", "start")

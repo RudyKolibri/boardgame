@@ -93,7 +93,6 @@ shape = SubResource( 1 )
 [node name="Tween" type="Tween" parent="."]
 
 [node name="inputhandler" parent="." instance=ExtResource( 3 )]
-visible = false
 position = Vector2( 8, 8 )
 
 [node name="archerhandler" parent="." instance=ExtResource( 6 )]
@@ -124,6 +123,7 @@ enabled = true
 collision_mask = 7
 collide_with_areas = true
 
-[connection signal="input_event" from="." to="." method="_on_archer_input_event"]
 [connection signal="kill" from="." to="inputhandler" method="_on_archer_kill"]
 [connection signal="kill" from="." to="archerhandler" method="_on_archer_kill"]
+[connection signal="mouse_entered" from="." to="." method="_on_archer_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_archer_mouse_exited"]

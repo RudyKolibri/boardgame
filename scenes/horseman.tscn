@@ -63,6 +63,30 @@ tracks/3/keys = {
 "update": 0,
 "values": [ Vector2( 0.8, 1 ) ]
 }
+tracks/4/type = "value"
+tracks/4/path = NodePath("evel:offset")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("evel:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ) ]
+}
 
 [sub_resource type="Animation" id=7]
 resource_name = "attack"
@@ -87,6 +111,30 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.3, 0.5, 0.55, 0.65 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 0.8, 1 ), Vector2( 0.8, 1 ), Vector2( 1, 1 ), Vector2( 1.2, 0.8 ), Vector2( 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("evel:offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2, 0.3, 0.5, 0.6, 0.65 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, -6 ), Vector2( 0, -6 ), Vector2( 0, 0 ), Vector2( 0, 2 ), Vector2( 0, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("evel:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
 "times": PoolRealArray( 0, 0.2, 0.3, 0.5, 0.55, 0.65 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
 "update": 0,
@@ -863,8 +911,9 @@ anims/links = SubResource( 11 )
 anims/rechts = SubResource( 12 )
 anims/up = SubResource( 13 )
 
-[connection signal="input_event" from="." to="." method="_on_horseman_input_event"]
 [connection signal="kill" from="." to="inputhandler" method="_on_horseman_kill"]
+[connection signal="mouse_entered" from="." to="." method="_on_horseman_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_horseman_mouse_exited"]
 [connection signal="body_entered" from="rechts" to="." method="attack"]
 [connection signal="body_entered" from="links" to="." method="attack"]
 [connection signal="body_entered" from="beneden" to="." method="attack"]

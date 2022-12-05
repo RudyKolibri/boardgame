@@ -10,11 +10,14 @@ signal knockbackdone
 signal kill
 
 var input = Vector2()
+var l = Timer.new()
+
 var myturn = false
 var chase_after = null
 var is_chasing = false
 var bodie
 var sliding : = false
+var is_point = false
 
 export var sliding_time : = 0.6
 export var enemy : bool
@@ -22,6 +25,7 @@ export var health : int
 export var damage : int
 
 func _ready():
+	self.add_child(l)
 	$"../../TileMap".make_bussy(self.global_position, true)
 	if enemy:
 		add_to_group("enemy")
@@ -127,7 +131,17 @@ func get_ver():
 func get_hor():
 	return hor
 func turn():
-	if enemy != true:
+	if health <= 0:
+		$AudioStreamPlayer2D4.play()
+		yield($AudioStreamPlayer2D4, "finished")
+		$"../../TileMap".make_bussy(self.global_position, false)
+		emit_signal("done")
+		if self.is_in_group("player"):
+			self.remove_from_group("player")
+		if self.is_in_group("enemy"):
+			self.remove_from_group("enemy")
+		queue_free()
+	elif enemy != true:
 		myturn = true
 	else:
 		var minus = 0
@@ -159,6 +173,7 @@ func turn():
 			$links/CollisionShape2D.disabled = false
 			$rechts/CollisionShape2D.disabled = false
 			$dust/dustplayer.play("all")
+			$AnimationPlayer.play("attack")
 			yield($dust/dustplayer, "animation_finished")
 			$omhoog/CollisionShape2D.disabled = true
 			$beneden/CollisionShape2D.disabled = true
@@ -190,7 +205,7 @@ func turn():
 							$omhoog/CollisionShape2D.disabled = false
 							$dust/dustplayer.play("up")
 						if pushing.y > 0:
-							$omlaag/CollisionShape2D.disabled = false
+							$beneden/CollisionShape2D.disabled = false
 							$dust/dustplayer.play("down")
 						if times > ver:
 							times = ver
@@ -269,10 +284,6 @@ func hit(damages, knockback = Vector2.ZERO, times = 1, parent = null):
 func skipclick():
 	myturn = false
 	moveclick(self.global_position)
-func _on_horseman_input_event(_viewport, event,_shape_idx):
-	if myturn == true:
-		if event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_LEFT:
-			$inputhandler.handle(hor, ver, 1)
 func attack(body):
 	if body.is_in_group("tilemap"):
 		pass
@@ -280,3 +291,20 @@ func attack(body):
 		body.hit(damage, Vector2.ZERO,  1, self)
 	else:
 		pass
+func _on_horseman_mouse_entered():
+	if myturn == true and is_point == false:
+		$inputhandler.handle(hor, ver, 1)
+		is_point = true
+	elif myturn == true and is_point == true:
+		emit_signal("kill")
+		$inputhandler.handle(hor, ver, 1)
+		is_point = true
+func _on_horseman_mouse_exited():
+	if myturn == true:
+		l.set_wait_time(2)
+		l.set_one_shot(true)
+		l.start()
+		yield(l, "timeout")
+		emit_signal("kill")
+		is_point = false
+

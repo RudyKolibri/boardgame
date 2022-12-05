@@ -42,6 +42,7 @@ position = Vector2( 16, -16 )
 [node name="attackcontrol" parent="levelbuilder/turnbased/archer2" instance=ExtResource( 3 )]
 
 [node name="Camera2D" parent="levelbuilder" index="8"]
-position = Vector2( 40, 16 )
+position = Vector2( 48, 8 )
+zoom = Vector2( 2.5, 2.5 )
 
 [editable path="levelbuilder"]

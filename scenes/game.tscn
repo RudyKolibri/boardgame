@@ -50,7 +50,7 @@ format = 1
 
 [node name="turnbased" type="Sprite" parent="."]
 texture = ExtResource( 7 )
-offset = Vector2( 4, 4 )
+offset = Vector2( 8, 8 )
 script = ExtResource( 3 )
 
 [node name="Line2D" type="Line2D" parent="."]
@@ -66,20 +66,24 @@ offset = Vector2( 32, 32 )
 current = true
 script = ExtResource( 4 )
 
-[node name="Control" type="Control" parent="Camera2D"]
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="Control" type="CanvasLayer" parent="Camera2D"]
 
-[node name="Label" type="Label" parent="Camera2D/Control"]
+[node name="Control" type="Control" parent="Camera2D/Control"]
+margin_right = 40.0
+margin_bottom = 40.0
+mouse_filter = 2
+mouse_default_cursor_shape = 3
+
+[node name="Label" type="Label" parent="Camera2D/Control/Control"]
 visible = false
 modulate = Color( 0, 0, 0, 1 )
-margin_top = 25.0
+margin_top = 48.0
 margin_right = 64.0
-margin_bottom = 39.0
+margin_bottom = 62.0
 text = "50 fps"
 script = ExtResource( 5 )
 
-[node name="turnsleft" type="Label" parent="Camera2D/Control"]
+[node name="turnsleft" type="Label" parent="Camera2D/Control/Control"]
 modulate = Color( 0, 0, 0, 1 )
 self_modulate = Color( 0, 0, 0, 1 )
 margin_right = 64.0
