@@ -1,5 +1,10 @@
 extends Node2D
+export var ray_cast_tiles = 4
 func _ready():
+	$RayCast2D.cast_to.x = ray_cast_tiles * 16
+	$RayCast2D2.cast_to.y = ray_cast_tiles * 16
+	$RayCast2D3.cast_to.x = - ray_cast_tiles * 16
+	$RayCast2D4.cast_to.y = - ray_cast_tiles * 16
 	$RayCast2D.add_exception($"..")
 	$RayCast2D2.add_exception($"..")
 	$RayCast2D3.add_exception($"..")
