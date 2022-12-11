@@ -7,6 +7,7 @@ var hor = 2
 var ver_arrow = 4
 var hor_arrow = 4
 var chase = 0
+var minus = 0
 
 var l = Timer.new()
 var input = Vector2()
@@ -133,9 +134,57 @@ func attackclick(pos):
 		side =  Vector2(0,16)
 		arrower.rotation_degrees = -90
 	arrower.start(side)
-	myturn = false
-	emit_signal("done")
+	minus = 1
+func enemy_turn():
+	if is_chasing == true and is_instance_valid(chase_after):
+		if not chase_after == null:
+			var path = $path.chase(chase_after)
+			if not path == null:
+				var times = 1
+				var pushing = (path * 16) - self.global_position
+				if pushing.x / 16 > 0 or pushing.x / 16 < 0:
+					times = pushing.x / 16
+					if times > hor:
+						times = hor
+					if times < 0:
+						times = - times
+				if pushing.y / 16 > 0 or pushing.y / 16 < 0:
+					times = pushing.y / 16
+					if times > ver:
+						times = ver
+					if times < 0:
+						times = - times
+				$"../../TileMap".make_bussy(self.global_position, false)
+				push(pushing, times)
+		chase += 1
+		if chase >= 5:
+			is_chasing = false
+			chase = 0
+		myturn = false
+		emit_signal("done")
+	else:
+		var path = $path.getnext()
+		if not path == null:
+			var times = 1
+			var pushing = (path * 16) - self.global_position
+			if pushing.x / 16 > 0 or pushing.x / 16 < 0:
+				times = pushing.x / 16
+				if times > hor:
+					times = hor
+				if times < 0:
+					times = - times
+			if pushing.y / 16 > 0 or pushing.y / 16 < 0:
+				times = pushing.y / 16
+				if times > ver:
+					times = ver
+				if times < 0:
+					times = - times
+			$"../../TileMap".make_bussy(self.global_position, false)
+			push(pushing, times)
+		myturn = false
+		emit_signal("done")
 func turn():
+	minus = 0
 	if health <= 0:
 		$AudioStreamPlayer2D4.play()
 		yield($AudioStreamPlayer2D4, "finished")
@@ -160,54 +209,16 @@ func turn():
 		if colliding != Vector2.ZERO:
 			attackclick(colliding)
 			myturn = false
-			emit_signal("done")
-		elif is_chasing == true and is_instance_valid(chase_after):
-			if not chase_after == null:
-				var path = $path.chase(chase_after)
-				if not path == null:
-					var times = 1
-					var pushing = (path * 16) - self.global_position
-					if pushing.x / 16 > 0 or pushing.x / 16 < 0:
-						times = pushing.x / 16
-						if times > hor:
-							times = hor
-						if times < 0:
-							times = - times
-					if pushing.y / 16 > 0 or pushing.y / 16 < 0:
-						times = pushing.y / 16
-						if times > ver:
-							times = ver
-						if times < 0:
-							times = - times
-					$"../../TileMap".make_bussy(self.global_position, false)
-					push(pushing, times)
-			chase += 1
-			if chase >= 5:
-				is_chasing = false
-				chase = 0
-			myturn = false
-			emit_signal("done")
+			t = Timer.new()
+			t.set_wait_time(0.35)
+			t.set_one_shot(true)
+			self.add_child(t)
+			t.start()
+			yield(t, "timeout")
+			t.queue_free()
+			enemy_turn()
 		else:
-			var path = $path.getnext()
-			if not path == null:
-				var times = 1
-				var pushing = (path * 16) - self.global_position
-				if pushing.x / 16 > 0 or pushing.x / 16 < 0:
-					times = pushing.x / 16
-					if times > hor:
-						times = hor
-					if times < 0:
-						times = - times
-				if pushing.y / 16 > 0 or pushing.y / 16 < 0:
-					times = pushing.y / 16
-					if times > ver:
-						times = ver
-					if times < 0:
-						times = - times
-				$"../../TileMap".make_bussy(self.global_position, false)
-				push(pushing, times)
-			myturn = false
-			emit_signal("done")
+			enemy_turn()
 func hit(damage, knockback = Vector2.ZERO, times = 1, parent = null):
 	if not parent == null:
 		is_chasing = true
@@ -241,13 +252,15 @@ func skipclick():
 	myturn = false
 func _on_archer_mouse_entered():
 	if myturn == true and is_point == false:
-		$archerhandler.handle(hor_arrow, ver_arrow)
-		$inputhandler.handle(hor, ver)
+		if minus == 0:
+			$archerhandler.handle(hor_arrow, ver_arrow)
+		$inputhandler.handle(hor, ver, minus)
 		is_point = true
 	elif myturn == true and is_point == true:
 		emit_signal("kill")
-		$archerhandler.handle(hor_arrow, ver_arrow)
-		$inputhandler.handle(hor, ver)
+		if minus == 0:
+			$archerhandler.handle(hor_arrow, ver_arrow)
+		$inputhandler.handle(hor, ver, minus)
 		is_point = true
 func _on_archer_mouse_exited():
 	if myturn == true:

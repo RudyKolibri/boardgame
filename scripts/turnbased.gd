@@ -40,23 +40,35 @@ func play_turn():
 		active_character = get_child(new_index)
 		if not is_instance_valid(active_character):
 			play_turn()
-		self.offset = active_character.position + normalofset
-		active_character.turn()
-		yield(active_character, "done")
-		new_index = (active_character.get_index() + 1) % get_child_count()
-		if new_index % get_child_count() == 0:
-			left_turns -= 1
-			$"../Camera2D".update_turns(left_turns)
-		active_character = get_child(new_index)
-		old_index = new_index
-		t = Timer.new()
-		t.set_wait_time(0.7)
-		t.set_one_shot(true)
-		self.add_child(t)
-		t.start()
-		yield(t, "timeout")
-		t.queue_free()
-		play_turn()
+		print(active_character.get_class())
+		if active_character.get_class() == "Timer":
+			active_character.queue_free()
+			print("timer")
+			new_index = (active_character.get_index() + 1) % get_child_count()
+			if new_index % get_child_count() == 0:
+				left_turns -= 1
+				$"../Camera2D".update_turns(left_turns)
+			active_character = get_child(new_index)
+			old_index = new_index
+			play_turn()
+		else:
+			self.offset = active_character.position + normalofset
+			active_character.turn()
+			yield(active_character, "done")
+			new_index = (active_character.get_index() + 1) % get_child_count()
+			if new_index % get_child_count() == 0:
+				left_turns -= 1
+				$"../Camera2D".update_turns(left_turns)
+			active_character = get_child(new_index)
+			old_index = new_index
+			t = Timer.new()
+			t.set_wait_time(0.7)
+			t.set_one_shot(true)
+			self.add_child(t)
+			t.start()
+			yield(t, "timeout")
+			t.queue_free()
+			play_turn()
 	if left_turns <= 0:
 		$"..".game_over()
 func _physics_process(_delta):
